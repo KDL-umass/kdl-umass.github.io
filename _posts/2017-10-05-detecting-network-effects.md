@@ -9,7 +9,7 @@ categories: reading-group
 
 ### Leader: [Kaleigh](https://people.cs.umass.edu/~kclary/)
 
-[_Kaleigh_](https://people.cs.umass.edu/~kclary/):
+[Kaleigh](https://people.cs.umass.edu/~kclary/):
 Good intro to graph cluster randomization, some things missing (other, theory paper may have more information) - note that this has several different names, but is called “graph cluster randomization” in the Ugander(?) paper
 Setup: running exps with clusters is expensive -- can you whether SUTVA holds and thus use the cheaper simple random assignment
 Basic setup: have graph…
