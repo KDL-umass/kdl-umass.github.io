@@ -1,0 +1,14 @@
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-faded sticky-top site-header" role="navigation">
+  <a class="navbar-brand site-header" id="header_words" href="#">{{ site.title }}</a>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav">
+      {% for page in site.nav %}
+      {% if page.text %}
+      <li class="nav-item site-header">
+        <a class="page-link nav-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.text }}</a>&nbsp;&nbsp;
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>

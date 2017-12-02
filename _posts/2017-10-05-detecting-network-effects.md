@@ -1,8 +1,10 @@
 ---
 layout: post
-title:  "Detecting Network Effects: Randomizing over Randomized Experiments"
+title: Reading Group led by Kaleigh
+subtitle:  "Detecting Network Effects: Randomizing over Randomized Experiments"
 date:   2017-10-05 15:27:02 -0400
 categories: reading-group
+author: etosch
 ---
 
 ## Paper: [Detecting Network Effects: Randomizing over Randomized Experiments](http://www.kdd.org/kdd2017/papers/view/detecting-network-effects-randomizing-over-randomized-experiments)

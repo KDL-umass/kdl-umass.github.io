@@ -1,25 +1,14 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
-title: KDL Lab Blog
+title: Knowledge Discovery Laboratory
 
 # Build settings
 markdown: kramdown
 theme: minima
 plugins:
-  - jekyll-feed
+ - jekyll-feed
+ - jekyll-paginate
+paginate: 5
+posts: _posts
+# paginate_path: "/blog/page:num"
 
 # Set this to your disqus shortname to enable comments. Note that the 'comments'
 # setting below must also be true. Individual posts can override 'comments' to
@@ -38,3 +27,32 @@ comments: true
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+# Explicitly enumerated here so that we can control the ordering
+nav:
+  - text: About
+    url: /about.html
+  - text: People
+    url: /people.html
+  - text: Publications
+    url: /publications.html
+  - text: Blog
+    url: /index.html
+  - text: Software
+    url: /software.html
+  - text: Data
+    url: /data.html
+
+collections:
+  people:
+    output: true
+  pubs:
+    output: true
+  posts:
+    output: true
+
+authors:
+  etosch:
+    first: Emma
+    last: Tosch
+

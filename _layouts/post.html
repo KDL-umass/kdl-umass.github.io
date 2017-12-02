@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 comments: true
 excerpt_separator: <!--break-->
 ---
@@ -8,13 +8,11 @@ excerpt_separator: <!--break-->
   <div class="well">
     <h1>
       <a href="{{ site.baseurl }}{{ page.url }}">{{ page.date | date: "%b %-d, %Y" }} - {{ page.title }}</a></h1>
-    
-    <p class="author">{% for author in page.author %}
+
+    <p class="author">Written by {% for author in page.author %}
       @{{ author }}&nbsp;&middot;
       {% endfor %}
-      {% if site.comments and page.comments and site.disqus != '' %}
-       <a href="{{ site.baseurl }}{{ page.url }}#disqus_thread" data-disqus-identifier="{{ post.url | slugify }}">Comments</a>
-      {% endif %}
+      <a href="{{ site.baseurl }}{{ page.url }}#disqus_thread" data-disqus-identifier="{{ post.url | slugify }}">Comments</a>
     </p>
     
     

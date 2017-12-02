@@ -1,0 +1,107 @@
+.preview {
+  font-size: 14pt;
+}
+
+.post {
+  margin: 10px 10px 15px 15px;
+}
+
+.pub {
+  margin-top: 12px;
+}
+
+h3 {
+  font-size: 16pt;
+  font-style: italic;
+}
+
+h2 {
+  font-size: 18pt;
+  margin-top: 10pt;
+}
+
+h1 {
+  font-size: 20pt;
+  margin-left: 5pt;
+}
+
+.bibtex {
+  font-family: courier;
+  white-space: pre;
+  display: block;
+  unicode-bidi: embed;
+}
+
+.thumbnail {
+    float:left;
+    width:180px;
+    min-height: 180px;
+    border:solid;
+    margin-right: 15px;
+}
+
+.person {
+    font-size: 14pt;
+    margin-top: 10px;
+}
+
+.site-header {
+    color: #FFFFFF;
+    font-size:20pt;
+    list-style: none;
+}
+
+.page-link {
+    color: white;
+    font-size: 16pt;
+    vertical-align: bottom;
+}
+
+
+body {
+    padding: 0px;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    margin: 0px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    text-align: left;
+    background-color: #881c1c;
+    font-size: 32px;
+    font-family: Tahoma, Geneva, sans-serif;
+    color: #ccc;
+}
+
+.umassfooter a {
+    font-size: 12pt;
+    color: #ccc;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.page {
+    font-size: 16pt;
+    padding: 5px;
+    color: #000;
+    background-color: #ece9d4;
+    border-color: #F3F4EC;
+    border-style: outset;
+    border-width: 2px;
+    margin-top: 10px;
+    border-radius: 15px;
+    min-height: 500px;
+}
+
+p {
+  margin: 10px 10px 15px 10px;
+}
+
+.nobullet {
+    list-style: none;
+    list-style-type: none;
+    width: 100%;
+}
