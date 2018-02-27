@@ -1,5 +1,5 @@
 .preview {
-  font-size: 14pt;
+  font-size: 12pt;
 }
 
 .post {
@@ -41,7 +41,7 @@ h1 {
 }
 
 .person {
-    font-size: 14pt;
+    font-size: 12pt;
     margin-top: 10px;
 }
 
@@ -53,7 +53,7 @@ h1 {
 
 .page-link {
     color: white;
-    font-size: 16pt;
+    font-size: 14pt;
     vertical-align: bottom;
 }
 
@@ -84,7 +84,7 @@ body {
 }
 
 .page {
-    font-size: 16pt;
+    font-size: 12pt;
     padding: 5px;
     color: #000;
     background-color: #ece9d4;
