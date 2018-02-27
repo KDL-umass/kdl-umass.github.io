@@ -31,13 +31,13 @@ comments: true
 # Explicitly enumerated here so that we can control the ordering
 nav:
   - text: About
-    url: /about.html
+    url: /index.html
   - text: People
     url: /people.html
   - text: Publications
     url: /publications.html
   - text: Blog
-    url: /index.html
+    url: /blog.html
   - text: Software
     url: /software.html
   - text: Data
