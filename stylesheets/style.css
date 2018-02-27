@@ -7,6 +7,7 @@
 }
 
 .pub {
+  font-size: 12pt;
   margin-top: 12px;
 }
 
@@ -21,8 +22,9 @@ h2 {
 }
 
 h1 {
-  font-size: 20pt;
+  font-size: 14pt;
   margin-left: 5pt;
+  font-weight: bold;
 }
 
 .bibtex {

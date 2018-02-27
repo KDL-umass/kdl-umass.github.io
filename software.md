@@ -4,7 +4,7 @@ layout: page
 
 KDL has developed and released several open source software packages as part of our research efforts:
 
-[**Relational Causal Discovery**](_software/relational_causal_discovery.md)
+[**Relational Causal Discovery**](_software/relational_causal_discovery.html)
 
 Relational Causal Discovery (RCD) is a sound and complete algorithm for learning causal models from relational data.  RCD employs a novel rule, called relational bivariate orientation, that can can detect the orientation of a bivariate dependency with no assumptions on the underlying distribution.  Combined with relational extensions to the rules utilized by the PC algorithm, RCD is provably sound and complete under the causal sufficiency assumption.  Given a database and schema, RCD outputs a partially directed model that represents the equivalence class of statistically indistinguishable relational causal models.
 
