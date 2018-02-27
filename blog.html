@@ -38,12 +38,12 @@ layout: page
 <ul class="pager main-pager">
   {% if paginator.previous_page %}
   <ul class="previous" style="float: left;">
-    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: 'index.html', '/' | replace: '//', '/' }}">&larr; Newer Posts</a>
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: 'blog.html', '/' | replace: '//', '/' }}">&larr; Newer Posts</a>
   </ul>
   {% endif %}
   {% if paginator.next_page %}
   <ul class="next" style="float: right;">
-    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: 'index.html', '/' | replace: '//', '/' }}">Older Posts &rarr;</a>
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: 'blog.html', '/' | replace: '//', '/' }}">Older Posts &rarr;</a>
   </ul>
   {% endif %}
 </ul>
