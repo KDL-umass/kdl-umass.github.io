@@ -36,6 +36,8 @@ nav:
     url: /people.html
   - text: Publications
     url: /publications.html
+  - text: Recent News
+    url: /recent_news.html
   - text: Software
     url: /software.html
   - text: Data
