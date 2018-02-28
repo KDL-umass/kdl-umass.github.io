@@ -3,11 +3,11 @@ title: Knowledge Discovery Laboratory
 # Build settings
 markdown: kramdown
 theme: minima
-plugins:
- - jekyll-feed
- - jekyll-paginate
-paginate: 5
-posts: _posts
+# plugins:
+# - jekyll-feed
+# - jekyll-paginate
+# paginate: 5
+# posts: _posts
 # paginate_path: "/blog/page:num"
 
 # Set this to your disqus shortname to enable comments. Note that the 'comments'

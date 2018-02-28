@@ -3,6 +3,7 @@ layout: page
 publish: true
 name: Sam Witty
 role: Graduate Student
+hastitle: true 
 title: Research Assistant
 thumbnail: images/witty.jpg
 webpage: http://www.cs.umass.edu/~switty

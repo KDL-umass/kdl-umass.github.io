@@ -1,6 +1,6 @@
 ---
 layout: page
-publish: true
+publish: false
 name: Daniel Corkill
 role: Research and Technical Staff
 title: Senior Research Scientist
