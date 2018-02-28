@@ -3,6 +3,7 @@ layout: page
 publish: true
 name: Kaleigh Clary
 role: Graduate Student
+thumbnail: images/clary.jpg
 webpage: http://cics.umass.edu/~kclary
 email: kclary@cs.umass.edu
 ---
