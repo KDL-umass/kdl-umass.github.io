@@ -1,11 +1,23 @@
 ---
+permalink: power_bayes.html
 layout: page
 ---
-Relational Causal Discovery (RCD) is a sound and complete algorithm for learning causal models from relational data.  RCD employs a novel rule, called relational bivariate orientation, that can can detect the orientation of a bivariate dependency with no assumptions on the underlying distribution.  Combined with relational extensions to the rules utilized by the PC algorithm[1], RCD is provably sound and complete under the causal sufficiency assumption.  Given a database and schema, RCD outputs a partially directed model that represents the equivalence class of statistically indistinguishable relational causal models.
 
-Download RCD 1.0 distribution
+<h1> PowerBayes </h1>
+<p> </p>
 
-RCD is designed and implemented by the Knowledge Discovery Laboratory in the College of Information and Computer Sciences at the University of Massachusetts Amherst. See “A Sound and Complete Algorithm for Learning Causal Models from Relational Data” (Maier, et al., UAI 2013)  for additional information on RCD.
+PowerBayes 1.0 is a package for structure learning of Bayesian networks. It contains implementations of many common structure-learning algorithms and new algorithms using constraint satisfaction for learning models with improved structural accuracy.
 
+See “Learning the Structure of Bayesian Networks with Constraint Satisfaction.” Fast, Andrew. Ph.D. Thesis, University of Massachusetts Amherst. (2009) for additional information on the algorithms appearing in PowerBayes.
 
-[1] Spirtes, P., Glymour, C., and Scheines, R. (2000) Causation, Prediction and Search, MIT Press.
+PowerBayes 1.0 is written in Java. The PowerBayes distribution includes:
+
+- Java source code
+- All necessary libraries
+- README file containing instructions for running structure learning algorithms
+
+**[Download PowerBayes 1.0 distribution](./software_files/power-bayes-1_0.zip)**
+
+**[Download Bayesian network models for use with PowerBayes](./software_files/bnr.zip)**
+
+PowerBayes is designed and implemented by the [Knowledge Discovery Laboratory](https://kdl.cs.umass.edu) in the [College of Information and Computer Sciences](https://www.cics.umass.edu/) at the [University of Massachusetts Amherst](https://umass.edu).
