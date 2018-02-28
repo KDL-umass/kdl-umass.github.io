@@ -5,7 +5,7 @@ name: Akanksha Atrey
 role: Graduate Student
 hastitle: true
 title: Research Assistant
-thumbnail: images/akanksha.png
+thumbnail: images/atrey.png
 webpage: http://www.cs.umass.edu/~aatrey
 email: aatrey@cs.umass.edu
 ---
