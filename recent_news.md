@@ -2,7 +2,7 @@
 layout: page
 ---
 
-- [Akanksha Atrey](https://cs.umass.edu/~aatrey) got selected (with scholarship) to attend the CRA-W Grad Cohort 2018 in April.
+- [Akanksha Atrey](https://cs.umass.edu/~aatrey) was selected to attend the CRA-W Grad Cohort for Women Workshop in April.
 - [David Jensen](http://people.cs.umass.edu/~jensen/) gave a talk at CMU's [Heinz College of Information Systems and Public Policy](https://www.heinz.cmu.edu/) on "Explainable Artificial Intelligence: Opportunities and Challenges for Public Policy." (2/19/2018)
 - [David Jensen](http://people.cs.umass.edu/~jensen/) gave a distinguished lecture at the [Center for Causal Discovery](https://www.ccd.pitt.edu/) at the University of Pittsburgh on "The Case for Empirical Evaluation of Methods for Causal Modeling." (2/15/2018)
 - [Javier Burroni](https://www.linkedin.com/in/javierburroni/) presented our poster on "Interactive Writing and Debugging of Bayesian Probabilistic Programs" at the [Workshop on Probabilistic Programming Languages, Semantics, and Systems](https://popl18.sigplan.org/track/pps-2018). (1/9/2018)
