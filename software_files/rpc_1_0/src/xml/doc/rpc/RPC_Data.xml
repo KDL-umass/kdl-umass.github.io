@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Part of the open source KDL Relational PC package (see LICENSE for
+     copyright and license information).
+-->
+
+<chapter id="ch_data">
+<title>Data for Relational PC</title>
+
+<para>You can use your own data or generated data for &rpc;.
+This chapter describes the required format for imported data and
+database schema files.
+See the description of the <filename>runPRC.py</filename> script in
+<xref linkend="datagenrun"/> for details on generating data to
+use with &rpc;.</para>
+
+<!-- ============================================================== -->
+<!--                        DATA REQUIREMENTS                       -->
+<!-- ============================================================== -->
+
+<section>
+<title>Data Requirements</title>
+
+<para>To use your own data with &rpc; you must
+<itemizedlist spacing="compact">
+  <listitem><para>Make sure that the data obeys the required format</para></listitem>
+  <listitem><para>Provide a schema file for the data</para></listitem>
+</itemizedlist>
+The format for the schema file is described below.  The &rpc;
+algorithm ignores any tables that are not included in the schema file.
+</para>
+
+<para>Data requirements for use with &rpc; are fairly straightforward:
+<itemizedlist spacing="compact">
+  <listitem><para>Every entity and relationship must have a corresponding
+     table in the database.</para></listitem>
+  <listitem><para>Every table must have a primary key.</para></listitem>
+  <listitem><para>Every relationship table must contain foreign keys
+     to the corresponding entity tables.</para></listitem>
+</itemizedlist>
+</para>
+
+<para>By convention, key names default to
+<blockquote>
+<para><code><replaceable>name</replaceable>_id</code></para>
+</blockquote>
+where <replaceable>name</replaceable> is the name of the entity or
+relationship defined by that table.  You can define different primary
+and foreign keys using the <code>primaryKey</code> and
+<code>foreignKey</code> statements in your schema file.</para>
+
+<para>For example:
+
+<programlisting>primaryKey(person_id, people).
+foreignKey(resides_id, livesAt, people).
+</programlisting>
+defines the primary key <code>person_id</code> for the
+&ldquo;people&rdquo; table and defines the foreign key
+<code>resides_id</code> for references to the &ldquo;people&rdquo;
+table from the &ldquo;livesAt&rdquo; table.
+See <filename>&rpchome;/test/test-schema.pl</filename> for additional
+examples of defining primary and foreign keys in the schema file.</para>
+
+
+</section>
+
+<!-- ============================================================== -->
+<!--                         DATABASE SCHEMA                        -->
+<!-- ============================================================== -->
+
+<section>
+<title>Database Schema</title>
+
+<para>The &rpcpkg; uses a Prolog file to define the associated
+database schema.  You must define four schema components:
+<itemizedlist spacing="compact">
+<listitem>
+  <para>entities</para>
+</listitem>
+<listitem>
+  <para>relationships</para>
+</listitem>
+<listitem>
+  <para>attributes on entities</para>
+</listitem>
+<listitem>
+  <para>attributes on relationships</para>
+</listitem>
+</itemizedlist>
+&rpc; treats all numerical values as continuous data, defining bins to
+create categorical data for 
+<symbol role="Symbol">&chi;</symbol><superscript>2</superscript>
+statistical operations.  If your data 
+contains numerical values that should be treated as categorical data,
+you can specify this in the schema file, as well.</para>
+
+<para>The code fragments in this section define the schema used for the
+data generated for the example <filename>runRPC.py</filename> script:
+<mediaobject>
+<imageobject role="fo">
+    <imagedata align="center"
+     fileref="&graphicspath;/datagen-schema.png"
+     width="5.75in" format="PNG" />
+</imageobject>
+<imageobject role="html">
+    <imagedata align="center" valign="bottom"
+     fileref="&graphicspath;/datagen-schema.png" 
+     contentwidth="7.0in"
+     format="PNG" />
+</imageobject>
+</mediaobject>
+</para>
+
+<!-- .............................................................. -->
+<!--                            Entities                            -->
+<!-- .............................................................. -->
+
+<bridgehead renderas="sect3">Entities</bridgehead>
+
+<para>The example schema contains four entities, labeled
+<token role="entity">a</token> through <token
+role="entity">d</token>.  Each entity is defined by a line in the
+schema file of the form
+<blockquote>
+<para><userinput>entity(<varname>label</varname>).</userinput></para>
+</blockquote>
+The entities in the example schema are defined by the following lines:
+<programlisting>entity(a).
+entity(b).
+entity(c).
+entity(d).</programlisting>
+</para>
+
+<!-- .............................................................. -->
+<!--                          Relationships                         -->
+<!-- .............................................................. -->
+
+<bridgehead renderas="sect3">Relationships</bridgehead>
+
+<para>The example schema contains three relationships, labeled
+for the entities they connect.  Each relationship is defined by a line in the
+schema file of the form
+<blockquote>
+<para><userinput>relationship(<varname>label</varname>).</userinput></para>
+</blockquote>
+The relationships in the example schema are defined by the following lines:
+<programlisting>relationship(ab).
+relationship(bc).
+relationship(da).</programlisting>
+Note that relationships in an &rpc; schema are undirected.</para>
+
+<para>You must also specify the cardinality of each
+relationship. Relationships can be one-to-one, one-to-many, or many-to-many.
+The cardinality of each relationship &ldquo;end point&rdquo; is defined separately,
+using a line of the form
+<blockquote>
+<para><userinput>cardinality(<varname>relationship-name</varname>, <varname>end-point</varname>, <varname>value</varname>).</userinput></para>
+</blockquote>
+where
+<variablelist>
+<varlistentry>
+<term><varname>value</varname></term>
+<listitem>
+<para>is one of &ldquo;<literal>one</literal>&rdquo; or
+&ldquo;<literal>many</literal>&rdquo;.</para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+
+<para>The cardinality of the relationships in the example schema are
+defined by the following lines:
+<programlisting>cardinality(ab, a, one).
+cardinality(ab, b, many).
+cardinality(bc, b, many).
+cardinality(bc, c, many).
+cardinality(da, d, one).
+cardinality(da, a, one).
+</programlisting>
+These lines specify that <token role="edge">ab</token>
+defines a one-to-many relationship linking <token role="object">a</token>
+and <token role="object">b</token>, <token role="edge">bc</token>
+defines a many-to-many relationship linking
+<token role="object">b</token> and <token role="object">c</token>, and
+<token role="edge">da</token> defines a one-to-one
+relationship linking <token role="object">d</token> and 
+<token role="object">a</token>.
+</para>
+
+<!-- .............................................................. -->
+<!--                      Attributes on entities                    -->
+<!-- .............................................................. -->
+
+<bridgehead renderas="sect3">Attributes on entities</bridgehead>
+
+<para>The example schema defines one attribute for each entity, labeled
+<token role="attr">w</token> through <token role="attr">z</token>.
+Each entity attribute is defined by a line in the
+schema file of the form
+<blockquote>
+<para><userinput>attr(<varname>attr-name</varname>, <varname>entity</varname>).</userinput></para>
+</blockquote>
+The entity attributes in the example schema are defined by the following lines:
+<programlisting>attr(x, a).
+attr(y, b).
+attr(z, c).
+attr(w, d).</programlisting>
+</para>
+
+<!-- .............................................................. -->
+<!--                    Attributes on relationships                 -->
+<!-- .............................................................. -->
+
+<bridgehead renderas="sect3">Attributes on relationships</bridgehead>
+
+<para>The &rpc; algorithm is able to use information from attributes
+on both entities and relationships.  The example schema defines one
+attribute for each relationship, labeled for the attributes on the
+entities that they connect.  Each relationship attribute is defined by a
+line in the schema file of the form. Relationship attributes are defined
+the same way as entity attributes:
+<blockquote>
+<para><userinput>attr(<varname>attr-name</varname>, <varname>relationship</varname>).</userinput></para>
+</blockquote>
+The relationship attributes in the example schema are defined by the
+following lines:
+<programlisting>attr(w, d).
+attr(wx, da).
+attr(x, a).
+attr(xy, ab).
+attr(y, b).
+attr(yz, bc).
+attr(z, c).
+</programlisting>
+</para>
+
+<!-- .............................................................. -->
+<!--                          Categorical data                      -->
+<!-- .............................................................. -->
+
+<bridgehead renderas="sect3">Categorical data</bridgehead>
+
+<para>&rpc; currently requires all attribute values be numeric.
+To use categorical values, you must convert non-numeric categorical
+values to integers and specify that they are to be treated
+categorically, as described below.</para>
+
+<para>By default, &rpc; treats all numerical data as continuous,
+binning values to create categorical data for use by 
+<symbol role="Symbol">&chi;</symbol><superscript>2</superscript>
+statistical operations.  If your database contains categorical numeric
+attribute values that should not be binned, specify this in the schema file, as
+shown below:
+<blockquote>
+<para><userinput>categorical(<varname>attr-name</varname>).</userinput></para>
+</blockquote>
+</para>
+
+</section>
+
+</chapter>
+
+<!--
+  Local Variables:
+  mode: sgml
+  sgml-set-face: t
+  sgml-indent-step: nil
+  sgml-always-quote-attributes: t
+  sgml-parent-document: ("RPC_Main.xml" "book" "chapter")
+  sgml-default-dtd-file:"../DocBook.ced"
+  End:
+-->

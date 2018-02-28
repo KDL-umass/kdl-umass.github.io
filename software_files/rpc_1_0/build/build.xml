@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="causality" default="all">
+  
+  
+  <property file="causality.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.sbas/**"/>
+    <exclude name="**/.IJI.*/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <include name="**/?*.properties"/>
+    <include name="**/?*.xml"/>
+    <include name="**/?*.gif"/>
+    <include name="**/?*.png"/>
+    <include name="**/?*.jpeg"/>
+    <include name="**/?*.jpg"/>
+    <include name="**/?*.html"/>
+    <include name="**/?*.dtd"/>
+    <include name="**/?*.tld"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.5" value="${jdk.home.1.5}/bin"/>
+  <path id="jdk.classpath.1.5">
+    <fileset dir="${jdk.home.1.5}">
+      <include name="../../CurrentJDK/Home/lib/deploy.jar"/>
+      <include name="../../CurrentJDK/Home/lib/dt.jar"/>
+      <include name="../../CurrentJDK/Home/lib/jce.jar"/>
+      <include name="../../CurrentJDK/Home/lib/plugin.jar"/>
+      <include name="../../CurrentJDK/Home/lib/sa-jdi.jar"/>
+      <include name="../../CurrentJDK/Home/../Classes/charsets.jar"/>
+      <include name="../../CurrentJDK/Home/../Classes/classes.jar"/>
+      <include name="../../CurrentJDK/Home/../Classes/dt.jar"/>
+      <include name="../../CurrentJDK/Home/../Classes/jce.jar"/>
+      <include name="../../CurrentJDK/Home/../Classes/jconsole.jar"/>
+      <include name="../../CurrentJDK/Home/../Classes/jsse.jar"/>
+      <include name="../../CurrentJDK/Home/../Classes/laf.jar"/>
+      <include name="../../CurrentJDK/Home/../Classes/ui.jar"/>
+      <include name="../../CurrentJDK/Home/lib/ext/apple_provider.jar"/>
+      <include name="../../CurrentJDK/Home/lib/ext/dnsns.jar"/>
+      <include name="../../CurrentJDK/Home/lib/ext/localedata.jar"/>
+      <include name="../../CurrentJDK/Home/lib/ext/sunjce_provider.jar"/>
+      <include name="../../CurrentJDK/Home/lib/ext/sunpkcs11.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.5}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.5}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.5"/>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module Causality -->
+  
+  <dirname property="module.causality.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.causality" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.causality" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.causality" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.causality" value="${compiler.args}"/>
+  
+  <property name="causality.output.dir" value="${module.causality.basedir}/../classes"/>
+  <property name="causality.testoutput.dir" value="${module.causality.basedir}/../classes"/>
+  
+  <path id="causality.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="causality.module.classpath">
+    <path refid="${module.jdk.classpath.causality}"/>
+    <pathelement location="${module.causality.basedir}/../lib/plexus-utils-2.0.0.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/jython.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/colt.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/JRI.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/log4j-1.2.14.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/postgresql-8.4-701.jdbc3.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/jpl.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/junit-4.6.jar"/>
+  </path>
+  
+  <path id="causality.runtime.module.classpath">
+    <path refid="${module.jdk.classpath.causality}"/>
+    <pathelement location="${causality.output.dir}"/>
+    <pathelement location="${module.causality.basedir}/../lib/plexus-utils-2.0.0.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/jython.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/colt.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/JRI.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/log4j-1.2.14.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/postgresql-8.4-701.jdbc3.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/jpl.jar"/>
+    <pathelement location="${module.causality.basedir}/../lib/junit-4.6.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.causality">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.causality">
+    <patternset refid="excluded.from.module.causality"/>
+  </patternset>
+  
+  <path id="causality.module.sourcepath">
+    <dirset dir="${module.causality.basedir}/..">
+      <include name="src/java"/>
+      <include name="test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.causality" depends="compile.module.causality.production,compile.module.causality.tests" description="Compile module Causality"/>
+  
+  <target name="compile.module.causality.production" description="Compile module Causality; production classes">
+    <mkdir dir="${causality.output.dir}"/>
+    <javac destdir="${causality.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.causality}/javac">
+      <compilerarg line="${compiler.args.causality}"/>
+      <bootclasspath refid="causality.module.bootclasspath"/>
+      <classpath refid="causality.module.classpath"/>
+      <src refid="causality.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.causality"/>
+    </javac>
+    
+    <copy todir="${causality.output.dir}">
+      <fileset dir="${module.causality.basedir}/../src/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.causality.basedir}/../test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.causality.tests" depends="compile.module.causality.production" description="compile module Causality; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.causality" description="cleanup module">
+    <delete dir="${causality.output.dir}"/>
+    <delete dir="${causality.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <property name="java.src.dir" value="${module.causality.basedir}/../src/java"/>
+  <property name="build.javadoc.dir" value="${module.causality.basedir}/../javadoc"/>
+  
+  <target name="javadoc" depends="compile.module.causality" description="create javadocs">
+      <javadoc author="true"
+               version="true"
+               use="true"
+               windowtitle="Relational PC API"
+               sourcepath="${java.src.dir}"
+               destdir="${build.javadoc.dir}"
+               packagenames="rpc.*"
+               classpathref="causality.module.classpath"/>
+  </target>
+
+  <target name="clean" depends="clean.module.causality" description="cleanup all"/>
+  
+  <target name="all" depends="init, clean, compile.module.causality" description="build all"/>
+</project>

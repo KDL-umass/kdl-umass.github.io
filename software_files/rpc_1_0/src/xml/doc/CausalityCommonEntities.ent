@@ -1,0 +1,54 @@
+<!-- Entities used in Causality documentation -->
+
+<!-- Part of the KDL Relational PC package (see LICENSE for
+     copyright and license information).
+-->
+
+<!-- ************************************************************
+     General entities
+     ************************************************************ -->
+
+<!ENTITY graphicspath "images">
+<!ENTITY licensefile '<ulink url="../../LICENSE">LICENSE</ulink>'>
+
+<!ENTITY version "1.0">
+<!ENTITY fullversion "1.0">
+<!ENTITY majorversion "1">
+<!ENTITY rpcfull "Relational PC">
+<!ENTITY rpc "RPC">
+<!ENTITY rpcpkg "Relational PC package">
+<!ENTITY rpcdownloadurl "kdl.cs.umass.edu/causality">
+<!ENTITY rpcinstalldir "rpc">
+<!ENTITY rpchome "$RPC_HOME">
+<!ENTITY rpcexamplespath "$RPC_HOME/example/scripts">
+
+<!ENTITY macosx "Mac&nbsp;OS&nbsp;X">
+<!ENTITY javaversion "5.0">
+<!ENTITY swiplversion "5.6.64">
+<!ENTITY swiplinstalldir "/opt/local/lib/swipl-<varname>version</varname>">
+<!ENTITY swiplinstallexample "/opt/local/lib/swipl-5.10.0/bin/&swiplarch;">
+<!ENTITY swiplinstallexampledir "/opt/local/lib/swipl-5.10.0">
+<!ENTITY swiplarch "i386-darwin9.8.0">
+<!ENTITY Rversion "2.10">
+<!ENTITY postgresversion "8.4">
+<!ENTITY postgresdirectory "/Library/PostgreSQL/<varname>version</varname>">
+<!ENTITY rJavaversion "0.7-0">
+
+<!ENTITY prompt "&gt;">
+
+<!-- Paths -->
+<!ENTITY rpcpath "$RPC_HOME">
+
+
+<!-- ************************************************************
+     Classes (provides links to Javadocs)
+     ************************************************************ -->
+
+<!-- ==================================================================
+     Format of <classname> and <methodname> markup
+     (Do not include linebreaks; used here for ease of viewing only)
+
+     <!ENTITY ClassName '<ulink url="&javadocpath;/kdl/prox/script/Proximity.html">
+         <classname>ClassName</classname></ulink>'>
+
+================================================================== -->

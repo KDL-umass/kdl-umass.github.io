@@ -1,0 +1,351 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <!-- Part of the KDL Relational PC package (see LICENSE for
+      copyright and license information). -->
+      <title>Installing Relational PC</title>
+      <link rel="stylesheet" href="kdldoc.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+      <link rel="start" href="index.html" title="Relational PC User's Guide">
+      <link rel="up" href="ch01.html" title="Chapter&nbsp;1.&nbsp;Installation">
+      <link rel="prev" href="ch01.html" title="Chapter&nbsp;1.&nbsp;Installation">
+      <link rel="next" href="ch02.html" title="Chapter&nbsp;2.&nbsp;Running Relational PC">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div xmlns:exsl="http://exslt.org/common" class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch01.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">Chapter&nbsp;1.&nbsp;Installation</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch02.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="section" lang="en">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="d0e79"></a>Installing Relational PC
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <p>Follow the steps below to make sure that you have the necessary
+            components for running RPC.  You must have administrator privileges
+            to install some of the required components.
+         </p>
+         <div class="procedure"><a name="d0e84"></a><p xmlns:exsl="http://exslt.org/common" class="title"><b>Installing Relational PC:</b></p>
+            <ol type="1">
+               <li>
+                  <p>Verify that you are using Java&nbsp;SE&nbsp;5.0 or
+                     higher (i.e., version 1.5 or higher).  You can check your Java
+                     version with the command
+                     
+                  </p><pre class="synopsis">&gt; <strong class="userinput"><code>java -version</code></strong></pre></li>
+               <li>
+                  <p>Download and install SWI-Prolog 5.6.64 or higher
+                     from <a class="ulink" href="http://www.swi-prolog.org/" target="_top">www.swi-prolog.org</a>.
+                  </p>
+                  <p>Add the location of the <span xmlns:exsl="http://exslt.org/common" class="application" style="font-family: sans-serif">swipl</span>
+                     executable to <code class="envar">PATH</code>.  The default location for
+                     the <span xmlns:exsl="http://exslt.org/common" class="application" style="font-family: sans-serif">swipl</span> executable on Mac&nbsp;OS&nbsp;X is in
+                     <code class="filename">/opt/local/bin</code>.
+                  </p>
+               </li>
+               <li>
+                  <p>Download and install R&nbsp;2.10 or higher from 
+                     <a class="ulink" href="http://www.r-project.org/" target="_top">www.r-project.org</a>.
+                  </p>
+               </li>
+               <li>
+                  <p>Download and install PostgreSQL&nbsp;8.4 or higher from
+                     <a class="ulink" href="http://www.postgresql.org/" target="_top">www.postgresql.org</a>.
+                  </p>
+                  <p>Make sure that you record the password you assign to the
+                     PostgreSQL admin user.
+                  </p>
+               </li>
+               <li>
+                  <p>Create a user with your username inside PostgreSQL.</p>
+                  <ol type="a">
+                     <li>
+                        <p>In Finder, navigate to the PostgreSQL directory.  For a default
+                                    Mac&nbsp;OS&nbsp;X PostgreSQL installation, this is likely to be
+                                    "<code class="filename">/Applications/PostgreSQL&nbsp;<em class="varname"><code>version</code></em></code>"
+                                    where <em class="varname"><code>version</code></em> is the version of PostgreSQL.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Double click the <span xmlns:exsl="http://exslt.org/common" class="application" style="font-family: sans-serif">pgAdmin</span>
+                                    application to open the application.
+                        </p>
+                     </li>
+                     <li>
+                        <p>In the <span class="guilabel"><strong>Object browser</strong></span> pane, double
+                                    click the PostgreSQL server name.
+                        </p>
+                     </li>
+                     <li>
+                        <p>When prompted, enter the PostgreSQL admin user
+                                    password.
+                        </p>
+                     </li>
+                     <li>
+                        <p>From the <span class="guimenu"><strong>Edit</strong></span> menu, choose
+                                    <span class="guimenuitem"><strong>New Object</strong></span>, then choose
+                                    <span class="guimenuitem"><strong>New Login Role</strong></span>.
+                        </p>
+                     </li>
+                     <li>
+                        <p>In the <span class="guilabel"><strong>Role name</strong></span> box, enter your
+                                    login name for your local computer.
+                        </p>
+                     </li>
+                     <li>
+                        <p>In the <span class="guilabel"><strong>Password</strong></span> box, enter a
+                                    password for this user.  The password need not be the same as
+                                    your login password.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Retype the password in the <span class="guilabel"><strong>Password
+                                          (again)</strong></span> box.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Click <span class="guilabel"><strong>Role privileges</strong></span> and
+                                    select all options.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Click <span class="guibutton"><strong>OK</strong></span>.
+                        </p>
+                     </li>
+                  </ol>
+               </li>
+               <li>
+                  <p>Create a directory to hold the PostgreSQL log files.   You
+                       will probably need to use <code class="code">sudo</code> to make changes to the
+                       PostgreSQL installation.
+                  </p>
+                  <ol type="a">
+                     <li>
+                        <p>Change to your PostgreSQL directory.  For Mac&nbsp;OS&nbsp;X this
+                             is typically
+                             <code class="filename">/Library/PostgreSQL/<em class="varname"><code>version</code></em></code>.
+                        </p><pre class="synopsis">&gt; <strong class="userinput"><code>cd /Library/PostgreSQL/<em class="varname"><code>version</code></em></code></strong></pre></li>
+                     <li>
+                        <p>Create the <code class="filename">logs</code> subdirectory.
+                           
+                        </p><pre class="synopsis">&gt; <strong class="userinput"><code>sudo mkdir logs</code></strong></pre><p>
+                             Enter your usual user password when prompted.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Change ownership of the new directory to <code class="literal">postgres</code>.
+                           
+                        </p><pre class="synopsis">&gt; <strong class="userinput"><code>sudo chown postgres logs</code></strong></pre></li>
+                  </ol>
+               </li>
+               <li>
+                  <p>Configure PostgreSQL to trust local connections.
+                     
+                  </p>
+                  <ol type="a">
+                     <li>
+                        <p>Switch to the &#8220;postgres&#8221; user identity</p><pre class="synopsis">&gt; <strong class="userinput"><code>sudo su postgres</code></strong></pre></li>
+                     <li>
+                        <p>Edit the file <code class="filename">/Library/PostgreSQL/<em class="varname"><code>version</code></em>/data/pg_hba.conf</code>,
+                                    changing the local and IPv4 connection methods to <code class="code">trust</code>.
+                        </p><pre class="programlisting"># "local" is for Unix domain socket connections only
+local   all         all                               <strong class="userinput"><code>trust</code></strong>
+# IPv4 local connections:
+host    all         all         127.0.0.1/32          <strong class="userinput"><code>trust</code></strong>
+# IPv6 local connections:
+host    all         all         ::1/128               md5
+</pre></li>
+                     <li>
+                        <p>Save the edited file and stay logged in as the
+                                   &#8220;postgres&#8221; user.
+                        </p>
+                     </li>
+                  </ol>
+               </li>
+               <li>
+                  <p>Manually restart the PostgreSQL server, allowing it to use as
+                     much working memory as possible.
+                     
+                  </p>
+                  <ol type="a">
+                     <li>
+                        <p>Still logged in as the &#8220;postgres&#8221; user,
+                                    stop the PostgreSQL server.
+                        </p><pre class="synopsis">&gt; <strong class="userinput"><code>cd /Library/PostgreSQL/<em class="varname"><code>version</code></em>/bin</code></strong>
+&gt; <strong class="userinput"><code>./pg_ctl stop -D ../data</code></strong></pre></li>
+                     <li>
+                        <p>Restart the server, providing additional memory.</p><pre class="synopsis">&gt; <strong class="userinput"><code>./postmaster -S 1000000 -D ../data/ &gt; ../logs/logfile 2&gt;&amp;1 &amp;</code></strong></pre></li>
+                     <li>
+                        <p>Log out as the &#8220;postgres&#8221; user.</p><pre class="synopsis">&gt; <strong class="userinput"><code>exit</code></strong></pre></li>
+                  </ol>
+                  <p>If you stop the PostgreSQL server, you must restart it using the
+                     same command in order to enable the increase in working memory.
+                     Alternately, you can edit <code class="filename">postgresql.conf</code> to
+                     reset the available working memory persistently.
+                  </p>
+                  <ol type="a">
+                     <li>
+                        <p>Logged in as the &#8220;postgres&#8221; user, edit the file
+                           <code class="filename">/Library/PostgreSQL/<em class="varname"><code>version</code></em>/data/postgresql.conf</code>,
+                           uncommenting and increasing the value of <code class="code">work_mem</code>.
+                        </p><pre class="programlisting">work_mem = 1024MB                        # min 64kB
+</pre><p>The 1024MB allocated above is shown as an example value.
+                           Choose a size for working memory suitable for your machine&#8217;s
+                           architecture and your data needs.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Stop and restart the PostgreSQL server for this
+                           setting to take effect.
+                           
+                        </p><pre class="synopsis">&gt; <strong class="userinput"><code>cd /Library/PostgreSQL/<em class="varname"><code>version</code></em>/bin</code></strong>
+&gt; <strong class="userinput"><code>./pg_ctl stop -D ../data</code></strong>
+&gt; <strong class="userinput"><code>./postmaster -D ../data/ &gt; ../logs/logfile 2&gt;&amp;1 &amp;</code></strong></pre></li>
+                  </ol>
+               </li>
+               <li>
+                  <p>Download and unpack the RPC distribution available from 
+                     <a class="ulink" href="http://kdl.cs.umass.edu/causality/" target="_top">kdl.cs.umass.edu/causality</a>. Although you
+                     may install the Relational PC package wherever you wish, this document assumes
+                     installation in the <code class="filename">rpc</code> directory at
+                     the top level in your user directory, i.e.,
+                     <code class="filename">/Users/<em class="replaceable"><code>username</code></em>/rpc/</code>.
+                  </p>
+               </li>
+               <li>
+                  <p>Copy the Java&#8211;Prolog interface dynamic library
+                     (<code class="filename">libjpl.dylib</code>) from the
+                     SWI-Prolog installation to the <code class="filename">lib</code> directory of
+                     your RPC installation.
+                  </p>
+                  <ol type="a">
+                     <li>
+                        <p>Find your local SWI-Prolog installation.  For a default
+                                   installation on Mac&nbsp;OS&nbsp;X your local SWI-Prolog 
+                                   directory is likely to be <code class="filename">/opt/local/lib/swipl-<em class="varname"><code>version</code></em></code>.
+                                   If this is not the case, examine the symbolic link target for
+                                   the <span xmlns:exsl="http://exslt.org/common" class="application" style="font-family: sans-serif">swipl</span> executable.
+                        </p>
+                        <p>For example, the link might point to the
+                                   <code class="filename">/opt/local/lib/swipl-5.10.0/bin/i386-darwin9.8.0</code>
+                                   directory.  Your local SWI-Prolog installation would therefore
+                                   be in <code class="filename">/opt/local/lib/swipl-5.10.0</code>.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Navigate to your local SWI-Prolog installation directory.
+                           
+                        </p><pre class="synopsis">&gt; <strong class="userinput"><code>cd /opt/local/lib/swipl-<em class="varname"><code>version</code></em></code></strong></pre></li>
+                     <li>
+                        <p>Go to the <code class="filename">lib</code> subdirectory for your
+                                   specific architecture.  For example,
+                           
+                        </p><pre class="synopsis">&gt; <strong class="userinput"><code>cd lib/i386-darwin9.8.0</code></strong></pre></li>
+                     <li>
+                        <p>Copy the file <code class="filename">libjpl.dylib</code> to the
+                                   <code class="filename">lib</code> directory of your RPC installation.
+                           
+                        </p><pre class="synopsis">&gt; <strong class="userinput"><code>cp libjpl.dylib ~/rpc/lib/</code></strong></pre></li>
+                     <li>
+                        <p>Change to the <code class="filename">lib</code> directory of your RPC
+                           installation and
+                           create a symbolic link from the SWI dynamic library to the
+                           corresponding <code class="filename">jnilib</code> file.
+                        </p><pre class="synopsis">&gt; <strong class="userinput"><code>cd ~/rpc/lib</code></strong>
+&gt; <strong class="userinput"><code>ln -s libjpl.dylib libjpl.jnilib</code></strong></pre></li>
+                  </ol>
+               </li>
+               <li>
+                  <p>Create your machine-dependent Java&#8211;R interface (JRI) library for
+                     RPC.
+                  </p>
+                  <ol type="a">
+                     <li>
+                        <p>Download and uncompress rJava&nbsp;0.7-0 from
+                                   <a class="ulink" href="http://cran.r-project.org/src/contrib/Archive/rJava/" target="_top">cran.r-project.org/src/contrib/Archive/rJava</a>.
+                                   You must use version&nbsp;0.7-0; both newer and older
+                                   versions do not support the needed functionality.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Change to the <code class="filename">jri</code>
+                                   subdirectory of your rJava installation.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Follow the instructions in the
+                                   <code class="filename">README</code> file in this directory to compile
+                                   the library.  You may need to execute the compilation commands
+                                   with <span xmlns:exsl="http://exslt.org/common" class="application" style="font-family: sans-serif">sudo</span>.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Copy <code class="filename">libjri.jnilib</code> into the
+                                   <code class="filename">lib</code> directory of your RPC
+                                   installation.
+                        </p>
+                     </li>
+                  </ol>
+               </li>
+               <li>
+                  <p>Change to the <code class="filename">build</code> subdirectory of your
+                     local RPC installation and compile RPC using the
+                     <span xmlns:exsl="http://exslt.org/common" class="application" style="font-family: sans-serif">ant</span> build tool.
+                     
+                  </p><pre class="synopsis">&gt; <strong class="userinput"><code>cd ~/rpc/build</code></strong>
+&gt; <strong class="userinput"><code>ant</code></strong></pre></li>
+               <li>
+                  <p>Define the required environment variables.</p>
+                  <p>Edit or create <code class="filename">/etc/launchd.conf</code> to include
+                     the following lines:
+                     
+                  </p><pre class="synopsis">setenv RPC_HOME /Users/<em class="varname"><code>username</code></em>/rpc
+setenv R_HOME /Library/Frameworks/R.framework/Resources</pre><p>
+                     where <em class="varname"><code>username</code></em> is your computer username.
+                     Substitute the appropriate path if you have installed RPC in a
+                     different location.
+                  </p>
+                  <p>You must reboot your computer for these definitions to take effect.</p>
+               </li>
+            </ol>
+         </div>
+         <p>To test your installation, run the example
+            <code class="filename">runRPC.py</code> script included in the
+            <code class="filename">$RPC_HOME/example/script/</code> directory.  This script
+            generates a small example database from a known causal model and runs
+            the RPC algorithm on that data.
+            
+         </p><pre class="synopsis">&gt; <strong class="userinput"><code>cd $RPC_HOME</code></strong>
+&gt; <strong class="userinput"><code>bin/script.sh example/scripts/runRPC.py testdb example/schemas/datagen-schema.pl</code></strong></pre><p>
+            
+         </p>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch01.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch01.html">Up</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch02.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">Chapter&nbsp;1.&nbsp;Installation&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;2.&nbsp;Running Relational PC</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,300 @@
+/**
+ * $Id$
+ *
+ * Part of the open-source PowerBayes system
+ *   (see LICENSE for copyright and license information).
+ */
+
+package kdl.bayes.search;
+
+import kdl.bayes.PowerBayesNet;
+import kdl.bayes.util.Assert;
+import kdl.bayes.util.GraphUtil;
+import kdl.bayes.util.StatUtil;
+import org.apache.log4j.Logger;
+
+import java.util.*;
+
+/**
+ * BNSearchProblem
+ */
+public class BNSearchProblem implements SearchProblem {
+    protected static Logger log = Logger.getLogger(BNSearchProblem.class);
+    protected BNSearchState initialState;
+    protected int statisticalCalls = 0;
+    protected boolean usingCache = true;
+    protected Map<CachedOperation, Double> cachedOpsToScores = new HashMap<CachedOperation, Double>();
+    protected Map<Integer, Set<CachedOperation>> idxToCachedOps = new HashMap<Integer, Set<CachedOperation>>();
+
+    public BNSearchProblem(PowerBayesNet bn) {
+        initialState = new BNSearchState(bn);
+        statisticalCalls += bn.getNrOfNodes();  // one per CPT
+        log.debug(usingCache ? "Caching is on" : "Caching is off");
+    }
+
+    public BNSearchProblem(PowerBayesNet bn, boolean[][] dag) {
+        Assert.condition(bn.m_Instances.numAttributes() == dag.length,
+                "DAG must be same size as number of attributes in instances");
+        for (int i = 0; i < dag.length; i++) {
+            for (int j = 0; j < dag[i].length; j++) {
+                if (dag[i][j]) {
+                    bn.addEdge(i, j);
+                }
+            }
+        }
+        initialState = new BNSearchState(bn);
+        log.debug(usingCache ? "Caching is on" : "Caching is off");
+    }
+
+    public int compareStates(SearchState state1, SearchState state2) {
+        if (state1 == state2) {
+            return 0;
+        }
+
+        if (state1 == null) {
+            return -1;
+        }
+
+        if (state2 == null) {
+            return 1;
+        }
+
+        return (state1).compareTo(state2);
+    }
+
+    public static boolean containsCycle(PowerBayesNet bn) {
+        return GraphUtil.hasDirectedCycle(bn.getDag());
+    }
+
+    public boolean containsCycle(PowerBayesNet bn, int from, int to) {
+        return containsCycle(bn, from, to, false);
+    }
+
+    /**
+     * Checks if adding (or reversing) an edge would create a cycle in
+     * the BayesNet.
+     *
+     * @param bn
+     * @param from
+     * @param to
+     * @param reverseEdge true if edge is being reversed, false if being added
+     * @return true if bn plus addition of edge (from, to) contains a cycle
+     */
+    // NB: modified from Weka
+    public boolean containsCycle(PowerBayesNet bn, int from, int to, boolean reverseEdge) {
+        //todo: make more efficient: use an ancestor matrix, see...
+        //http://www.library.uu.nl/digiarchief/dip/diss/2002-0723-145927/full.pdf
+
+        // check for cycles
+        if (reverseEdge) {
+            bn.getParentSet(to).deleteParent(from, bn.m_Instances);
+            bn.getParentSet(from).addParent(to, bn.m_Instances);
+        } else {
+            bn.getParentSet(to).addParent(from, bn.m_Instances);
+        }
+
+        boolean containsCycle = containsCycle(bn);
+
+        // restore parent sets
+        if (reverseEdge) {
+            // delete added edge and add original edge back in
+            bn.getParentSet(from).deleteLastParent(bn.m_Instances);
+            bn.getParentSet(to).addParent(from, bn.m_Instances);
+        } else {
+            bn.getParentSet(to).deleteLastParent(bn.m_Instances);
+        }
+
+        return containsCycle;
+    }
+
+    public SearchState getInitialState() {
+        return initialState;
+    }
+
+    public double getScore(SearchState state) {
+        BNSearchState bnState = (BNSearchState) state;
+        return bnState.getScore();
+    }
+
+    public Collection getSuccessors(SearchState state) {
+        BNSearchState predecessor = (BNSearchState) state;
+        List<BNSearchState> successors = new ArrayList<BNSearchState>();
+
+        if (usingCache) {
+            // assumes that the predecessor represents the most recent
+            // operation, and so one must remove from the cache any
+            // operations that have gone stale
+
+            // stale operations include any operation that affects the CPT
+            // of the toIdx variable, and if predecessor is a reverse operation
+            // then any op that affects the CPT of the fromIdx variable.
+            int op = predecessor.getOp();
+            if ((op == BNSearchState.ADD || op == BNSearchState.DEL || op == BNSearchState.REV) &&
+                    idxToCachedOps.containsKey(predecessor.getToIdx())) {
+                Set<CachedOperation> staleOperations = idxToCachedOps.get(predecessor.getToIdx());
+                cachedOpsToScores.keySet().removeAll(staleOperations);
+                //log.debug("Removing " + staleOperations.size() + " that involve variable index " + predecessor.getToIdx());
+                staleOperations.clear();
+                idxToCachedOps.put(predecessor.getToIdx(), staleOperations);
+            }
+            if (op == BNSearchState.REV && idxToCachedOps.containsKey(predecessor.getFromIdx())) {
+                Set<CachedOperation> staleOperations = idxToCachedOps.get(predecessor.getFromIdx());
+                cachedOpsToScores.keySet().removeAll(staleOperations);
+                //log.debug("Removing " + staleOperations.size() + " that involve variable index " + predecessor.getFromIdx());
+                staleOperations.clear();
+                idxToCachedOps.put(predecessor.getFromIdx(), staleOperations);
+            }
+        }
+
+        // for every (i,j) in current state's bayes net,
+        // try to add, delete, or reverse edge (i,j)
+        PowerBayesNet bn = predecessor.getBayesNet();
+        int numAttributes = bn.getNrOfNodes();
+        for (int i = 0; i < numAttributes; i++) {
+            for (int j = 0; j < numAttributes; j++) {
+                // self-edges not allowed
+                if (i == j) {
+                    continue;
+                }
+                // if (i,j) not in E, then check that adding (i,j) is okay
+                else if (!bn.getParentSet(j).contains(i)) {
+                    if (okayToAddEdge(bn, i, j)) {
+                        if (usingCache) {
+                            CachedOperation cachedOp = new CachedOperation(BNSearchState.ADD, i, j);
+                            successors.add(lookupOperation(predecessor, cachedOp));
+                        } else {
+                            successors.add(new BNSearchState(predecessor, i, j, BNSearchState.ADD));
+                            statisticalCalls++;
+                        }
+                    }
+                }
+                // (i,j) is in E
+                else {
+                    if (okayToDelEdge(bn, i, j)) {
+                        if (usingCache) {
+                            CachedOperation cachedOp = new CachedOperation(BNSearchState.DEL, i, j);
+                            successors.add(lookupOperation(predecessor, cachedOp));
+                        } else {
+                            successors.add(new BNSearchState(predecessor, i, j, BNSearchState.DEL));
+                            statisticalCalls++;
+                        }
+                    }
+
+                    if (okayToRevEdge(bn, i, j)) {
+                        if (usingCache) {
+                            CachedOperation cachedOp = new CachedOperation(BNSearchState.REV, i, j);
+                            successors.add(lookupOperation(predecessor, cachedOp));
+                        } else {
+                            successors.add(new BNSearchState(predecessor, i, j, BNSearchState.REV));
+                            statisticalCalls += 2;       // must recompute two CPTs
+                        }
+                    }
+                }
+            }
+        }
+        return successors;
+    }
+
+    private BNSearchState lookupOperation(BNSearchState predecessor, CachedOperation cachedOp) {
+        BNSearchState successorState;
+        if (cachedOpsToScores.containsKey(cachedOp)) {
+            //log.debug("Cache hit: " + cachedOp);
+            double scoreChange = cachedOpsToScores.get(cachedOp);
+            successorState = new BNSearchState(predecessor, cachedOp.fromIdx, cachedOp.toIdx, cachedOp.op, scoreChange);
+        } else {
+            //log.debug("Cache miss: " + cachedOp);
+            successorState = new BNSearchState(predecessor, cachedOp.fromIdx, cachedOp.toIdx, cachedOp.op);
+            updateCache(cachedOp, successorState);
+            statisticalCalls++;
+        }
+        return successorState;
+    }
+
+    protected void updateCache(CachedOperation cachedOp, BNSearchState state) {
+        //log.debug(cachedOp + " added to the cache");
+        double scoreChange = state.getScoreChange();
+        cachedOpsToScores.put(cachedOp, scoreChange);
+
+        // if it is an add or a del, this cached op won't go stale unless another
+        // op is selected that affects the CPT of the toIdx variable
+        if (!idxToCachedOps.containsKey(cachedOp.toIdx)) {
+            idxToCachedOps.put(cachedOp.toIdx, new HashSet<CachedOperation>());
+        }
+        Set<CachedOperation> cachedOps = idxToCachedOps.get(cachedOp.toIdx);
+        cachedOps.add(cachedOp);
+
+        // if it is a reverse, this cached op won't go stale unless another
+        // op is selected that affects the CPT of the toIdx variable
+        if (cachedOp.op == BNSearchState.REV) {
+            if (!idxToCachedOps.containsKey(cachedOp.fromIdx)) {
+                idxToCachedOps.put(cachedOp.fromIdx, new HashSet<CachedOperation>());
+            }
+            cachedOps = idxToCachedOps.get(cachedOp.fromIdx);
+            cachedOps.add(cachedOp);
+        }
+    }
+
+    public SearchState breakTies(List bestStates) {
+        return (SearchState) StatUtil.randomChoice(bestStates);
+    }
+
+    protected boolean okayToAddEdge(PowerBayesNet bn, int i, int j) {
+        return !containsCycle(bn, i, j);
+    }
+
+    protected boolean okayToDelEdge(PowerBayesNet bn, int i, int j) {
+        return true;
+    }
+
+    protected boolean okayToRevEdge(PowerBayesNet bn, int i, int j) {
+        return !containsCycle(bn, i, j, true);
+    }
+
+    public int getStatisticalCalls() {
+        return statisticalCalls;
+    }
+
+    class CachedOperation {
+        protected final int fromIdx;
+        protected final int toIdx;
+        protected final int op;
+        protected String opStr;
+
+        public CachedOperation(int op, int fromIdx, int toIdx) {
+            this.op = op;
+            this.fromIdx = fromIdx;
+            this.toIdx = toIdx;
+            if (op == BNSearchState.ADD) {
+                opStr = "ADD";
+            } else if (op == BNSearchState.DEL) {
+                opStr = "DEL";
+            } else if (op == BNSearchState.REV) {
+                opStr = "REV";
+            } else {
+                opStr = "UNKNOWN";
+            }
+        }
+
+        // from Ch. 11 Collections of Objects, in Thinking In Java, by Bruce Eckels
+        public int hashCode() {
+            int result = 17;
+            result = 37 * result + fromIdx;
+            result = 37 * result + toIdx;
+            result = 37 * result + op;
+            return result;
+        }
+
+        public boolean equals(Object other) {
+            if (other instanceof CachedOperation) {
+                CachedOperation otherOp = (CachedOperation) other;
+                return fromIdx == otherOp.fromIdx && toIdx == otherOp.toIdx && op == otherOp.op;
+            }
+            return false;
+        }
+
+        public String toString() {
+
+            return "[" + opStr + " (" + fromIdx + "," + toIdx + ")]";
+        }
+    }
+}

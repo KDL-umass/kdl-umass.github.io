@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Part of the KDL Relational PC package (see LICENSE for
+     copyright and license information).
+-->
+
+<bookinfo>
+
+<title>Relational PC User's Guide</title>
+<pubdate><?dbtimestamp format="B d, Y"?></pubdate>
+<copyright>
+<year>&copyrightyear;</year>
+<holder>David Jensen for the Knowledge Discovery Laboratory</holder>
+</copyright>
+
+<legalnotice>
+<para>The Relational PC algorithm, including source files and examples, is
+part of the KDL Relational PC package. See &licensefile;
+for copyright and license information.
+</para>
+
+<para>All trademarks or registered trademarks are the property
+of their respective owners.
+</para>
+
+<para>This effort is supported by AFRL and MIT Lincoln Laboratory
+under contract numbers FA8750-09-2-0187 and 7000032881. The
+U.S. Government is authorized to re- produce and distribute reprints
+for governmental purposes notwithstanding any copyright notation
+hereon. The views and conclusions contained herein are those of the
+authors and should not be interpreted as necessarily representing the
+official policies or endorsements either expressed or implied, of
+AFRL, MIT or the U.S. Government.</para>
+
+<para>General inquiries regarding Relational PC should be directed to:
+<blockquote>
+<address format="linespecific">
+Knowledge Discovery Laboratory
+c/o Professor David Jensen, Director
+<street>Department of Computer Science
+University of Massachusetts</street>
+<city>Amherst</city>, <state>Massachusetts</state> <postcode>01003-9264</postcode>
+
+or
+
+kdlsupport@kdl.cs.umass.edu
+</address>
+</blockquote>
+</para>
+
+</legalnotice>
+
+</bookinfo>
+
+
+<!--
+  Local Variables:
+  mode: sgml
+  sgml-set-face: t
+  sgml-indent-step: nil
+  sgml-always-quote-attributes: t
+  sgml-parent-document: ("RPC_Main.xml" "book" "chapter")
+  sgml-default-dtd-file:"../DocBook.ced"
+  End:
+-->

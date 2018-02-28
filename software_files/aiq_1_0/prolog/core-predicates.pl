@@ -1,0 +1,186 @@
+/**
+ * $Id: core-predicates.pl 111 2008-08-13 16:34:12Z afast $
+ *
+ * Part of the open-source AIQUE system
+ *   (see LICENSE for copyright and license information).
+ *
+ */
+
+/* 
+ * core-predicates.pl contains the necessary relations to implement QEDs 
+ * including path finding, temporal checking, and common cause checking.
+ */
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Stream
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Define streams automatically
+%stream(BaseItem, DynItem, Name).
+
+stream(BaseItem,DynItem,streamName(BaseItem,DynItem)) :- 
+	%Later we may want to incorporate streams with many to many relationships.
+	stream(BaseItem,DynItem,streamName(BaseItem,DynItem),_).
+	
+stream(BaseItem,DynItem,streamName(BaseItem,DynItem),Outvisited) :- 
+	%Later we may want to incorporate streams with many to many relationships.
+	related(BaseItem,DynItem,one,many, OutvisitedTemp),
+	append(OutvisitedTemp, [DynItem], Outvisited). 
+	
+%%%%%%%%%%%%%%%%%%%%%%%%
+% VarOf
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+% VarOf needs to be different than itemVar because swi-prolog won't let you define predicates with the same name in different files
+varOf(Var,Item) :- itemVar(Var,Item).
+
+% Agg can be replaced by any of the standard SQL aggregate functions COUNT, AVG, MAX, MIN etc.
+varOf(agg(Var),streamName(_,DynItem)) :- itemVar(Var,DynItem).
+
+% commented out for demo - can be replaced later
+%varOf(exists(DynItem),streamName(_,DynItem)) :- true.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Association
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Asserts association among all variables
+% Requires check in data after experiment.
+
+associated(X,Y,XStream,YStream) :- varOf(X,XStream),varOf(Y,YStream), statSig(X,Y).
+
+% statSig would later be used to identify statistically related variables
+statSig(_,_) :- true.  %Requires check in data.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Related
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Related presumes that a directional baseRelated predicate is defined for each relation in the data.
+% e.g., baseRelated(Branch, Firm, many, one).
+
+% Card1 represent one, many , currently not checked.
+
+reflexiveBaseRelated(Item1,Item2,Card1,Card2,InVisited,OutVisited) :-
+	%this is a directional relation item1 --> item2 
+	%always add the first item to the visited list
+	%Limit possible paths to length 4.
+	length(InVisited, X), X < 4, baseRelated(Item1,Item2,Card1,Card2), 
+	not(memberchk(Item1,InVisited)), append(InVisited, [Item1], OutVisited); 
+	
+	length(InVisited, X), X < 4, baseRelated(Item2,Item1,Card2,Card1), 
+	not(memberchk(Item1,InVisited)), append(InVisited, [Item1], OutVisited). 
+
+listRelated(Item1,Item2,Card1,Card2,InVisited,OutVisited) :- 
+	reflexiveBaseRelated(Item1,Item2,Card1,Card2,InVisited,OutVisited); 
+	
+	%Two cases to propagate "many"
+	%Case 1: if forward path ends in a many on first hop, propagate the many to the end
+	reflexiveBaseRelated(Item1,IntermediateItem,Card1,many,InVisited,OutVisited1), 
+	listRelated(IntermediateItem,Item2,_,_,OutVisited1,OutVisited),
+	Item1 \== Item2, Card2 = many;
+
+	%Case 2: forward path ends in a one, so propagate potential many in rest of path
+	reflexiveBaseRelated(Item1,IntermediateItem,Card1,one,InVisited,OutVisited1), 
+	listRelated(IntermediateItem,Item2,_,Card2,OutVisited1,OutVisited),
+	Item1 \== Item2.
+
+related(Item1,Item2,Card1,Card2,Outvisited) :- listRelated(Item1,Item2,Card1,Card2,[],Outvisited).
+
+related(Item1,Item2,Card1,Card2) :- listRelated(Item1,Item2,Card1,Card2,[],_).
+related(Item1, Item2) :- related(Item1, Item2, _, _).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Temporally Related
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Temporally Related checks the temporal compatibility on streams.
+
+temporallyRelated(Item1, Item2, Freq) :- 
+	temporallyRelated(Item1, Item2, Sum, Count, [],_),
+	Count > 0, 
+	Freq is Sum/Count.
+	
+baseTemporallyRelated(Item1, Item2, Sum, Count, InVisited, OutVisited) :- 
+	%Base Case 1: O->O
+	length(InVisited, X), X < 4, relationFrequency(Item1,Item2, Sum1), Count is 1, Sum is Sum1, not(memberchk(Item1,InVisited)), append([Item1], InVisited, OutVisited);
+	%Base Case 2: O<-O
+	length(InVisited, X), X < 4, relationFrequency(Item2,Item1,_), Count is 0, Sum is 0,
+	not(memberchk(Item1,InVisited)), append([Item1], InVisited, OutVisited).
+
+temporallyRelated(Item1, Item2, Sum, Count, InVisited, OutVisited) :- 
+	%Base Case : O->O or O<-O
+	baseTemporallyRelated(Item1,Item2, Sum, Count, InVisited, OutVisited);
+	
+	%Recursive Case : O->O...O or O<-O....O 
+	baseTemporallyRelated(Item1, IntermediateItem, Sum1, Count1, InVisited, OutVisited1),
+	temporallyRelated(IntermediateItem,Item2,InterSum,InterCount,OutVisited1,OutVisited), Item1 \== Item2,
+	Sum is Sum1 + InterSum,
+	Count is InterCount + Count1.
+
+temporalPathFrequency(StreamItems, Freq) :-
+	temporalPathFrequency(StreamItems, Sum, Count),
+	(Count > 0, Freq is Sum/Count; Count =< 0, Freq is 0).
+
+temporalPathFrequency(StreamItems,Sum,Count) :- 
+
+	length(StreamItems,X), X =< 1, Count is 0, Sum is 0;
+
+	[Item1|Tail1] = StreamItems,
+	[Item2|_] = Tail1,
+	
+	temporalPathFrequency(Tail1,SumTemp,CountTemp),
+	
+	(relationFrequency(Item1,Item2,Sum1),
+	Sum is SumTemp + Sum1,
+	Count is CountTemp + 1; relationFrequency(Item2,Item1,_), Sum is SumTemp, Count is CountTemp).
+	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Causes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Build all possible causes.
+
+possibleCauseList(EffectVar, CauseList, Stream) :- 	
+	varOf(EffectVar,Stream), 
+	findall(X, possibleCauseOf(X,EffectVar, Stream), TempList), 
+	sort(TempList, CauseList).
+
+
+possibleCauseOf(CauseVar, EffectVar, EffectStream) :- 
+   	% A possible cause is a variable, not the same as the effect variable.
+   	varOf(CauseVar,CauseStream), CauseVar\==EffectVar, CauseStream\==EffectStream,
+   	stream(CauseBase, _, CauseStream), stream(EffectBase, _, EffectStream),
+   	% Variables have to be on overlapping steams.
+   	CauseBase==EffectBase, 
+   	% For now, streams cannot be the same stream.
+   not(onTabooList(CauseVar, EffectVar)).
+
+%Cause var is on EffectVar's tabooList.
+onTabooList(CauseVar, EffectVar) :- 
+	setAsTaboo(EffectVar, CauseVar);
+	tabooList(EffectVar, List), memberchk(CauseVar, List).
+		
+%Define a default taboo list that is the empty set.
+tabooList(X, List) :- varOf(X,_),List = [].
+
+% Assert two variables have no common causes.			
+noCommonCauses(CauseVar, EffectVar) :- 
+	varOf(CauseVar,_), 
+	varOf(EffectVar,_), 
+	CauseVar \== EffectVar,
+	possibleCauseList(CauseVar, CauseList, _),
+	possibleCauseList(EffectVar, EffectList, _),
+	noIntersection(CauseList, EffectList).
+	
+noCommonCauses(CauseVar,EffectVar,CauseStream,EffectStream) :- 
+	varOf(CauseVar,CauseStream), 
+	varOf(EffectVar,EffectStream), 
+	CauseVar \== EffectVar,
+	possibleCauseList(CauseVar, CauseList, CauseStream),
+	possibleCauseList(EffectVar, EffectList,EffectStream),
+	noIntersection(CauseList, EffectList).
+ 
+noIntersection(List1, List2) :- intersection(List1, List2, Int), length(Int, X), X == 0.
+

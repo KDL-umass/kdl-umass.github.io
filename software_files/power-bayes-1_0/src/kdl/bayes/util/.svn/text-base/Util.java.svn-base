@@ -1,0 +1,246 @@
+/**
+ * $Id$
+ *
+ * Part of the open-source PowerBayes system
+ *   (see LICENSE for copyright and license information).
+ *
+ */
+
+/**
+ * $Id$
+ */
+package kdl.bayes.util;
+
+import junit.framework.Assert;
+import org.apache.log4j.*;
+
+import java.io.*;
+import java.util.*;
+
+
+/**
+ * Helper class that defines static methods useful to testing.
+ */
+public class Util {
+
+    private static Logger log = Logger.getLogger(Util.class.getName());
+
+    public static String LCF_FILE_NAME = "bayes.lcf";
+
+    private Util() {
+    }
+
+    /**
+     * Utility method to convert a Set of Integers to an int array.
+     *
+     * @param set
+     * @return
+     */
+    public static int[] convertSetToArray(Set<Integer> set) {
+        int[] ints = new int[set.size()];
+        int idx = 0;
+        for (Iterator<Integer> iterator = set.iterator(); iterator.hasNext();) {
+            ints[idx] = iterator.next();
+            idx++;
+        }
+        return ints;
+    }
+
+    /**
+     * Initializes the log4j logging package, using a config file. If no config
+     * file is specified, it does basic init. Prints an info message if file is
+     * found . Does basic init if not found, and warns user.
+     */
+    public static void initLog4J() {
+        // do basic config (needed both for null and invalid LCF_FILE_NAME)
+        LogManager.resetConfiguration();
+        BasicConfigurator.configure();
+        Logger rootLogger = Logger.getRootLogger();
+        rootLogger.setLevel(Level.INFO);
+
+        // try to load the file
+        File logConfigFile = new File(LCF_FILE_NAME);
+        if (logConfigFile.exists()) {
+            log.info("* found log config file: " + logConfigFile.getAbsolutePath() + "'");
+            LogManager.resetConfiguration();
+            PropertyConfigurator.configure(logConfigFile.getAbsolutePath());
+        } else {
+            log.warn("* log config file not found (using defaults): " +
+                    logConfigFile.getAbsolutePath() + "'");
+        }
+    }
+
+    private static List<Integer> intArrayToIntegerList(int[] ints) {
+        List<Integer> arrayList = new ArrayList<Integer>();
+        for (int i : ints) {
+            arrayList.add(i);
+        }
+        return arrayList;
+    }
+
+    /**
+     * Helper that compares Double values in the two maps, given a fixed
+     * delta.
+     *
+     * @param expectedMap
+     * @param actualMap
+     */
+    public static void verifyDoubleMap(Map<Integer, Double> expectedMap, Map<Integer, Double> actualMap) {
+        Assert.assertEquals(expectedMap.size(), actualMap.size());
+        for (Integer keyInt : expectedMap.keySet()) {
+            Double expValDouble = expectedMap.get(keyInt);
+            Double actualValDouble = actualMap.get(keyInt);
+            Assert.assertNotNull(actualValDouble);
+            Assert.assertEquals(expValDouble, actualValDouble, 0.0001);
+        }
+    }
+
+    /**
+     * Object[] overload. Helper that asserts actualEles contains only the passed
+     * expectedEles. Often used with getDelimStringListForNST().
+     *
+     * @param expectedEles
+     * @param actualEles
+     * @see #getDelimStringListForNST
+     */
+    public static void verifyCollections(Object[] expectedEles, Collection actualEles) {
+        verifyCollections(Arrays.asList(expectedEles), actualEles);
+    }
+
+    public static void verifyCollections(int[] expectedInts, int[] actualInts) {
+        List expectedList = intArrayToIntegerList(expectedInts);
+        List actualList = intArrayToIntegerList(actualInts);
+        verifyCollections(expectedList, actualList);
+    }
+
+    /**
+     * General collection overload.
+     *
+     * @param expectedEles
+     * @param actualSet
+     */
+    public static void verifyCollections(Collection expectedEles, Collection actualSet) {
+        Assert.assertEquals(expectedEles.size(), actualSet.size());
+        for (Object element : expectedEles) {
+            Assert.assertTrue("expected " + element + " not found in actual set: " + actualSet, actualSet.contains(element));
+        }
+    }
+
+    /**
+     * Checks a list -=- order counts
+     *
+     * @param correct
+     * @param suspect
+     */
+    public static void verifyList(List correct, List suspect) {
+        log.debug("suspect:" + suspect);
+        log.debug("correct:" + correct);
+        Assert.assertEquals(correct.size(), suspect.size());
+        for (int i = 0; i < correct.size(); i++) {
+            Assert.assertEquals(correct.get(i), suspect.get(i));
+        }
+    }
+
+    /**
+     * Generic Map verification
+     *
+     * @param expectedMap
+     * @param actualMap
+     */
+
+    public static void verifyMap(Map expectedMap, Map actualMap) {
+        Assert.assertEquals(expectedMap.size(), actualMap.size());
+        for (Object o : expectedMap.keySet()) {
+            Object expVal = expectedMap.get(o);
+            Object actualVal = actualMap.get(o);
+            Assert.assertNotNull(actualVal);
+            Assert.assertEquals(expVal, actualVal);
+        }
+    }
+
+    /**
+     * Parses the string, keeping quoted sections as a single word
+     *
+     * @param source
+     * @param separator
+     * @return a list of sub-strings separated by separator, keeping quoted portions together
+     */
+    public static List splitQuotedString(String source, char separator) {
+        List words = new ArrayList();
+
+        int from = 0;
+        for (int i = 0; i < source.length(); i++) {
+            char c = source.charAt(i);
+            if (c == '"' || c == '\'') {
+                // Read until eol or another "/'
+                int j;
+                for (j = i + 1; ; j++) {    // end test in body
+                    // advance the pointer until we reach EOL, the matching
+                    // delimiter (but not after a backslash)
+                    boolean isEOL = (j >= source.length());
+                    boolean isDelimitMatch = (source.charAt(j) == c);
+                    boolean isPrevCharSlash = (source.charAt(j - 1) == '\\');
+                    if (isEOL || (isDelimitMatch && !isPrevCharSlash)) {
+                        break;
+                    }
+                }
+                // Move i too ;
+                i = j;
+            }
+            // Add the string to the list
+            if (c == separator || i >= source.length() - 1) {
+                String toAdd = source.substring(from, i + 1);
+                if (separator == ' ') {
+                    toAdd = toAdd.trim();
+                } else if (toAdd.lastIndexOf(separator) != -1) {
+                    toAdd = toAdd.substring(0, toAdd.lastIndexOf(separator));
+                }
+                if (toAdd.length() > 0) {
+                    words.add(toAdd);
+                }
+                from = i + 1;
+            }
+        }
+
+        return words;
+    }
+
+    /**
+     * @param file
+     * @return a String that contains file's contents. note that newlines are
+     *         replaced by '\n'
+     */
+    public static String readStringFromFile(File file) {
+        StringBuffer fileSB = new StringBuffer();
+        BufferedReader bufferedReader = null;
+        try {
+            String line;
+            bufferedReader = new BufferedReader(new FileReader(file));
+            while ((line = bufferedReader.readLine()) != null) {
+                fileSB.append(line);
+                fileSB.append('\n');
+            }
+        } catch (IOException e) {
+            junit.framework.Assert.fail("error reading: " + file);
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    // ignore
+                }
+            }
+        }
+        return fileSB.toString();
+    }
+
+    /**
+     * Saves a string to a file
+     */
+    public static void saveStringToFile(String str, File file) throws IOException {
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+        out.print(str);
+        out.flush();
+        out.close();
+    }
+}

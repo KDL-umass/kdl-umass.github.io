@@ -1,0 +1,24 @@
+
+ABOUT
+
+PowerBayes is a free software package for learning the structure of Bayesian Networks.
+
+The package contains implementations of the algorithms described in:
+
+Andrew Fast, Learning the Structure of Bayesian Networks with Constraint Satisfaction, Ph.D. Thesis, University of Massachusetts Amherst, 2009
+
+USAGE
+
+See kdl.bayes.experiments.RunAlgorithm.java for instructions on running algorithms implemented in this package.
+
+The package assumes that data in Weka's ARFF format is available for each network in the following format:
+
+<path>/<dataname>/<dataname>.train.<index>.<sampleSize>
+
+and
+
+<path>/<dataname>/<dataname>.test.<index>.<sampleSize>
+
+where <path>, <dataname>, <index> and <sampleSize> are supplied as runtime arguments to RunAlgorithm.java.
+
+The PC-CMH algorithm requires a working installation of the R statistical environment in order to use the JRI interface.  Other algorithms should work properly without R installed.

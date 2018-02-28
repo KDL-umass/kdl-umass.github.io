@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Part of the open source KDL Relational PC package (see LICENSE for
+     copyright and license information).
+-->
+
+<chapter id="ch_install">
+<title>Installation</title>
+
+<!-- ============================================================== -->
+<!--                          REQUIREMENTS                          -->
+<!-- ============================================================== -->
+
+<section>
+<title>Requirements</title>
+
+<para>The &rpcpkg; (&rpc;) is an experimental prototype and has not been
+designed to support multiple platforms or alternate versions of the
+required components.  Currently, &rpcfull; runs under &macosx;&nbsp;10.5.
+Due to lack of support for the SWI-Prolog JPL libraries,
+&macosx;&nbsp;10.6 is explicitly not supported, and it is unlikely 
+that versions of OS&nbsp;X earlier than 10.4 will support all the
+applications necessary to run &rpcfull;.  Although the package may run
+on other selected UNIX platforms, this has not been tested and is not
+supported.  The instructions for installing and running &rpc; assume
+that you are working under &macosx;&nbsp;10.5.</para>
+
+<para>The &rpc; package requires the following components:
+<itemizedlist spacing="compact">
+<listitem>
+  <para>Java &javaversion; or higher</para>
+</listitem>
+<listitem>
+  <para>SWI-Prolog &swiplversion; or higher</para>
+</listitem>
+<listitem>
+  <para>R &Rversion; or higher</para>
+</listitem>
+<listitem>
+  <para>PostgreSQL &postgresversion; or higher</para>
+</listitem>
+<listitem>
+  <para>rJava&nbsp;&rJavaversion; (Java&ndash;R interface library)</para>
+</listitem>
+</itemizedlist>
+Optionally, you may also want to install Graphviz or other graph
+visualization software capable of displaying dot (hierarchical)
+drawings.</para>
+
+</section>
+
+<!-- ============================================================== -->
+<!--                    INSTALLING RELATIONAL PC                    -->
+<!-- ============================================================== -->
+
+<section>
+<title>Installing Relational PC</title>
+
+<para>Follow the steps below to make sure that you have the necessary
+components for running &rpc;.  You must have administrator privileges
+to install some of the required components.</para>
+
+<procedure>
+<title>Installing Relational PC</title>
+
+<step>
+<para>Verify that you are using Java&nbsp;SE&nbsp;&javaversion; or
+higher (i.e., version 1.5 or higher).  You can check your Java
+version with the command
+<synopsis>&prompt; <userinput>java -version</userinput></synopsis></para></step>
+
+<step>
+<para>Download and install SWI-Prolog &swiplversion; or higher
+from <ulink url="http://www.swi-prolog.org/">www.swi-prolog.org</ulink>.</para>
+
+<para>Add the location of the <application>swipl</application>
+executable to <envar>PATH</envar>.  The default location for
+the <application>swipl</application> executable on &macosx; is in
+<filename>/opt/local/bin</filename>.</para>
+</step>
+
+<step>
+<para>Download and install R&nbsp;&Rversion; or higher from 
+<ulink url="http://www.r-project.org/">www.r-project.org</ulink>.</para>
+</step>
+
+<step>
+<para>Download and install PostgreSQL&nbsp;&postgresversion; or higher from
+<ulink url="http://www.postgresql.org/">www.postgresql.org</ulink>.</para>
+
+<para>Make sure that you record the password you assign to the
+PostgreSQL admin user.</para>
+</step>
+
+<step><para>Create a user with your username inside PostgreSQL.</para>
+<substeps>
+   <step><para>In Finder, navigate to the PostgreSQL directory.  For a default
+         &macosx; PostgreSQL installation, this is likely to be
+         "<filename>/Applications/PostgreSQL&nbsp;<varname>version</varname></filename>"
+         where <varname>version</varname> is the version of PostgreSQL.</para></step>
+   <step><para>Double click the <application>pgAdmin</application>
+         application to open the application.</para></step>
+   <step><para>In the <guilabel>Object browser</guilabel> pane, double
+         click the PostgreSQL server name.</para></step>
+   <step><para>When prompted, enter the PostgreSQL admin user
+         password.</para></step>
+   <step><para>From the <guimenu>Edit</guimenu> menu, choose
+         <guimenuitem>New Object</guimenuitem>, then choose
+         <guimenuitem>New Login Role</guimenuitem>.</para></step>
+   <step><para>In the <guilabel>Role name</guilabel> box, enter your
+         login name for your local computer.</para></step>
+   <step><para>In the <guilabel>Password</guilabel> box, enter a
+         password for this user.  The password need not be the same as
+         your login password.</para></step>
+   <step><para>Retype the password in the <guilabel>Password
+         (again)</guilabel> box.</para></step>
+   <step><para>Click <guilabel>Role privileges</guilabel> and
+         select all options.</para></step>
+   <step><para>Click <guibutton>OK</guibutton>.</para></step>
+</substeps>
+</step>
+
+<step>
+<para>Create a directory to hold the PostgreSQL log files.   You
+  will probably need to use <code>sudo</code> to make changes to the
+  PostgreSQL installation.</para>
+<substeps>
+  <step><para>Change to your PostgreSQL directory.  For &macosx; this
+  is typically
+  <filename>&postgresdirectory;</filename>.</para>
+<synopsis>&prompt; <userinput>cd &postgresdirectory;</userinput></synopsis></step>
+  <step><para>Create the <filename>logs</filename> subdirectory.
+<synopsis>&prompt; <userinput>sudo mkdir logs</userinput></synopsis>
+  Enter your usual user password when prompted.</para></step>
+  <step><para>Change ownership of the new directory to <literal>postgres</literal>.
+<synopsis>&prompt; <userinput>sudo chown postgres logs</userinput></synopsis></para></step>
+</substeps>
+</step>
+
+<step>
+<para>Configure PostgreSQL to trust local connections.
+</para>
+<substeps>
+   <step><para>Switch to the &ldquo;postgres&rdquo; user identity</para>
+<synopsis>&prompt; <userinput>sudo su postgres</userinput></synopsis></step>
+   <step><para>Edit the file <filename>&postgresdirectory;/data/pg_hba.conf</filename>,
+         changing the local and IPv4 connection methods to <code>trust</code>.</para>
+<programlisting># "local" is for Unix domain socket connections only
+local   all         all                               <userinput>trust</userinput>
+# IPv4 local connections:
+host    all         all         127.0.0.1/32          <userinput>trust</userinput>
+# IPv6 local connections:
+host    all         all         ::1/128               md5
+</programlisting></step>
+  <step><para>Save the edited file and stay logged in as the
+        &ldquo;postgres&rdquo; user.</para></step>
+</substeps>
+</step>
+
+<step>
+<para>Manually restart the PostgreSQL server, allowing it to use as
+much working memory as possible.
+</para>
+<substeps>
+   <step><para>Still logged in as the &ldquo;postgres&rdquo; user,
+         stop the PostgreSQL server.</para>
+<synopsis>&prompt; <userinput>cd &postgresdirectory;/bin</userinput>
+&prompt; <userinput>./pg_ctl stop -D ../data</userinput></synopsis></step>
+   <step><para>Restart the server, providing additional memory.</para>
+<synopsis>&prompt; <userinput>./postmaster -S 1000000 -D ../data/ &gt; ../logs/logfile 2>&amp;1 &amp;</userinput></synopsis></step>
+   <step><para>Log out as the &ldquo;postgres&rdquo; user.</para>
+<synopsis>&prompt; <userinput>exit</userinput></synopsis></step>
+</substeps>
+<para>If you stop the PostgreSQL server, you must restart it using the
+same command in order to enable the increase in working memory.
+Alternately, you can edit <filename>postgresql.conf</filename> to
+reset the available working memory persistently.</para>
+<substeps>
+<step><para>Logged in as the &ldquo;postgres&rdquo; user, edit the file
+<filename>&postgresdirectory;/data/postgresql.conf</filename>,
+uncommenting and increasing the value of <code>work_mem</code>.</para>
+<programlisting>work_mem = 1024MB                        # min 64kB
+</programlisting>
+<para>The 1024MB allocated above is shown as an example value.
+Choose a size for working memory suitable for your machine&rsquo;s
+architecture and your data needs.</para>
+</step>
+<step><para>Stop and restart the PostgreSQL server for this
+setting to take effect.
+<synopsis>&prompt; <userinput>cd &postgresdirectory;/bin</userinput>
+&prompt; <userinput>./pg_ctl stop -D ../data</userinput>
+&prompt; <userinput>./postmaster -D ../data/ &gt; ../logs/logfile 2>&amp;1 &amp;</userinput></synopsis></para></step>
+</substeps>
+</step>
+
+<step>
+<para>Download and unpack the &rpc; distribution available from 
+<ulink
+url="http://&rpcdownloadurl;/">&rpcdownloadurl;</ulink>. Although you
+may install the &rpcpkg; wherever you wish, this document assumes
+installation in the <filename>&rpcinstalldir;</filename> directory at
+the top level in your user directory, i.e.,
+<filename>/Users/<replaceable>username</replaceable>/&rpcinstalldir;/</filename>.</para>
+</step>
+
+<step>
+<para>Copy the Java&ndash;Prolog interface dynamic library
+(<filename>libjpl.dylib</filename>) from the
+SWI-Prolog installation to the <filename>lib</filename> directory of
+your &rpc; installation.</para>
+<substeps>
+  <step><para>Find your local SWI-Prolog installation.  For a default
+        installation on &macosx; your local SWI-Prolog 
+        directory is likely to be <filename>&swiplinstalldir;</filename>.
+        If this is not the case, examine the symbolic link target for
+        the <application>swipl</application> executable.</para>
+        <para>For example, the link might point to the
+        <filename>&swiplinstallexample;</filename>
+        directory.  Your local SWI-Prolog installation would therefore
+        be in <filename>&swiplinstallexampledir;</filename>.</para></step>
+
+  <step><para>Navigate to your local SWI-Prolog installation directory.
+<synopsis>&prompt; <userinput>cd &swiplinstalldir;</userinput></synopsis></para></step>
+
+  <step><para>Go to the <filename>lib</filename> subdirectory for your
+        specific architecture.  For example,
+<synopsis>&prompt; <userinput>cd lib/&swiplarch;</userinput></synopsis></para></step>
+
+  <step><para>Copy the file <filename>libjpl.dylib</filename> to the
+        <filename>lib</filename> directory of your &rpc; installation.
+<synopsis>&prompt; <userinput>cp libjpl.dylib ~/rpc/lib/</userinput></synopsis></para></step>
+<step>
+<para>Change to the <filename>lib</filename> directory of your &rpc;
+installation and
+create a symbolic link from the SWI dynamic library to the
+corresponding <filename>jnilib</filename> file.</para>
+<synopsis>&prompt; <userinput>cd ~/rpc/lib</userinput>
+&prompt; <userinput>ln -s libjpl.dylib libjpl.jnilib</userinput></synopsis></step>
+</substeps>
+</step>
+
+<step>
+<para>Create your machine-dependent Java&ndash;R interface (JRI) library for
+&rpc;.</para>
+<substeps>
+  <step><para>Download and uncompress rJava&nbsp;&rJavaversion; from
+        <ulink url="http://cran.r-project.org/src/contrib/Archive/rJava/">cran.r-project.org/src/contrib/Archive/rJava</ulink>.
+        You must use version&nbsp;&rJavaversion;; both newer and older
+        versions do not support the needed functionality.</para></step>
+  <step><para>Change to the <filename>jri</filename>
+        subdirectory of your rJava installation.</para></step>
+  <step><para>Follow the instructions in the
+        <filename>README</filename> file in this directory to compile
+        the library.  You may need to execute the compilation commands
+        with <application>sudo</application>.</para></step>
+  <step><para>Copy <filename>libjri.jnilib</filename> into the
+        <filename>lib</filename> directory of your &rpc;
+        installation.</para></step>
+</substeps>
+</step>
+
+<step>
+<para>Change to the <filename>build</filename> subdirectory of your
+local &rpc; installation and compile &rpc; using the
+<application>ant</application> build tool.
+<synopsis>&prompt; <userinput>cd ~/rpc/build</userinput>
+&prompt; <userinput>ant</userinput></synopsis></para>
+</step>
+
+<step>
+<para>Define the required environment variables.</para>
+<para>Edit or create <filename>/etc/launchd.conf</filename> to include
+the following lines:
+<synopsis>setenv RPC_HOME /Users/<varname>username</varname>/rpc
+setenv R_HOME /Library/Frameworks/R.framework/Resources</synopsis>
+where <varname>username</varname> is your computer username.
+Substitute the appropriate path if you have installed &rpc; in a
+different location.</para>
+<para>You must reboot your computer for these definitions to take effect.</para></step>
+
+</procedure>
+<!-- End "Installing Relational PC" procedure -->
+
+<?pagebreak?>
+<para>To test your installation, run the example
+<filename>runRPC.py</filename> script included in the
+<filename>&rpchome;/example/script/</filename> directory.  This script
+generates a small example database from a known causal model and runs
+the &rpc; algorithm on that data.
+<synopsis>&prompt; <userinput>cd &rpchome;</userinput>
+&prompt; <userinput>bin/script.sh example/scripts/runRPC.py testdb example/schemas/datagen-schema.pl</userinput></synopsis>
+</para>
+
+</section>
+
+</chapter>
+
+<!--
+  Local Variables:
+  mode: sgml
+  sgml-set-face: t
+  sgml-indent-step: nil
+  sgml-always-quote-attributes: t
+  sgml-parent-document: ("RPC_Main.xml" "book" "chapter")
+  sgml-default-dtd-file:"../DocBook.ced"
+  End:
+-->

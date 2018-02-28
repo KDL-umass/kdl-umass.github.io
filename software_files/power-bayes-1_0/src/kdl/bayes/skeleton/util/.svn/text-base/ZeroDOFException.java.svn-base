@@ -1,0 +1,17 @@
+/**
+ * $Id$
+ *
+ * Part of the open-source PowerBayes system
+ *   (see LICENSE for copyright and license information).
+ */
+
+package kdl.bayes.skeleton.util;
+
+/**
+ * ZeroDOFException
+ */
+public class ZeroDOFException extends SparseDataException {
+    public ZeroDOFException(String msg) {
+        super(msg);
+    }
+}

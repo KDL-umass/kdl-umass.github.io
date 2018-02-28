@@ -1,0 +1,152 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <!-- Part of the KDL Relational PC package (see LICENSE for
+      copyright and license information). -->
+      <title>Chapter&nbsp;2.&nbsp;Running Relational PC</title>
+      <link rel="stylesheet" href="kdldoc.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+      <link rel="start" href="index.html" title="Relational PC User's Guide">
+      <link rel="up" href="index.html" title="Relational PC User's Guide">
+      <link rel="prev" href="ch01s02.html" title="Installing Relational PC">
+      <link rel="next" href="ch02s02.html" title="Running RPC on Generated Data">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div xmlns:exsl="http://exslt.org/common" class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch01s02.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch02s02.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="en">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="ch_running"></a>Chapter&nbsp;2.&nbsp;Running Relational PC
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="section" lang="en">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="d0e532"></a>Scripting Overview
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>RPC is run via Jython scripts.  Using Jython permits access to
+               the full RPC Java class library. Source code files for the scripts
+               discussed in this section are available in 
+               <code class="filename">$RPC_HOME/example/scripts</code>.
+            </p>
+            <div class="section" lang="en">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="d0e543"></a>Importing RPC packages
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>You only need to import a class or package when you
+                  refer to a class by name, such as when instantiating a class
+                  object, using a static method, or referring to one of its class
+                  variables.
+               </p>
+            </div>
+            <div class="section" lang="en">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="d0e551"></a>Executing scripts
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>To execute an RPC script, call <code class="filename">$RPC_HOME/bin/script.sh</code>
+                  from a terminal window, passing the required arguments on the command line.  You must provide
+                  the name of the Jython script; other aruments are optional and depend
+                  on the requirements of your Jython script.
+               </p>
+               <p>To execute the example scripts included in this release, use
+                  
+               </p><pre class="synopsis">&gt; <strong class="userinput"><code>$RPC_HOME/bin/script.sh <em class="replaceable"><code>script-file</code></em> <em class="replaceable"><code>db-name</code></em> <em class="replaceable"><code>schema-file</code></em></code></strong>
+</pre><p>
+                  where
+                  
+               </p>
+               <div class="itemizedlist">
+                  <ul type="disc">
+                     <li>
+                        <p><em class="replaceable"><code>db-name</code></em> is the name of the database, and
+                        </p>
+                     </li>
+                     <li>
+                        <p><em class="replaceable"><code>script-file</code></em> and
+                           <em class="replaceable"><code>schema-file</code></em> must be relative paths within
+                           the RPC installation tree or fully qualified paths
+                           to the corresponding files.
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                  
+               </p>
+            </div>
+            <div class="section" lang="en">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="d0e593"></a>Controlling logging
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>The Relational PC package uses 
+                  <a class="ulink" href="http://logging.apache.org/log4j/" target="_top"><span xmlns:exsl="http://exslt.org/common" class="application" style="font-family: sans-serif">log4j</span></a>
+                  to control the level of logging information displayed.  
+                  To control the logging options, RPC looks for a configuration file named
+                  <code class="filename">rcp.lcf</code> in the directory from which you execute
+                  the <code class="filename">script.sh</code> command.
+                  The default set up of RPC provides no logging configuration file and logs only
+                  the major milestones and output of the algorithm.
+               </p>
+               <p>You can include additional details in the logging trace by
+                  specifying a configuration file for <span xmlns:exsl="http://exslt.org/common" class="application" style="font-family: sans-serif">log4j</span>.
+                  An example configuration file that provides detailed traces of the
+                  algorithm&#8217;s actions, including queries and statistical tests, is included in
+                  <code class="filename">$RPC_HOME/example/config/rcp.lcf</code>.  
+                  Copy the example configuration file to <code class="filename">$RPC_HOME</code>
+                  to use its settings.  Or create a new configuration file, name it
+                  <code class="filename">rcp.lcf</code>, and place it in
+                  <code class="filename">$RPC_HOME</code> to define your own logging options.
+               </p>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch01s02.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch02s02.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">Installing Relational PC&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;Running RPC on Generated Data</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

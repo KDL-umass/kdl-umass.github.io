@@ -1,0 +1,40 @@
+/**
+ * $Id$
+ *
+ * Part of the open-source PowerBayes system
+ *   (see LICENSE for copyright and license information).
+ */
+
+package kdl.bayes.util;
+
+import kdl.bayes.PowerBayesNet;
+import weka.classifiers.bayes.net.ParentSet;
+
+/**
+ * BNEdges simple utility that reads in a Bayes net and prints out the edges
+ * Author: mhay
+ */
+public class BNEdges {
+    private static String path = "/nfs/aeolus/kdl/mhay/mmhc_local/data/";
+
+    public static void main(String[] args) throws Exception {
+        String netName = args[0];
+        int trainIndex = Integer.parseInt(args[1]);
+        int sampleSize = Integer.parseInt(args[2]);
+        String algorithm = args[3];
+        String prefix = path + netName + "/" + netName + ".";
+        String fileName = prefix + "bn." + algorithm + "." + trainIndex + "." + sampleSize + ".xml";
+
+        PowerBayesNet bn = new PowerBayesNet(fileName);
+        for (int i = 0; i < bn.getNrOfNodes(); i++) {
+            System.out.println(bn.getNodeName(i));
+        }
+        for (int i = 0; i < bn.getNrOfNodes(); i++) {
+            ParentSet parents = bn.getParentSet(i);
+            for (int j = 0; j < parents.getNrOfParents(); j++) {
+                int parentIdx = parents.getParent(j);
+                System.out.println(bn.getNodeName(parentIdx) + " " + bn.getNodeName(i));
+            }
+        }
+    }
+}

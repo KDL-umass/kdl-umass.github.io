@@ -1,0 +1,104 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <!-- Part of the KDL Relational PC package (see LICENSE for
+      copyright and license information). -->
+      <title>Interpreting RPC results</title>
+      <link rel="stylesheet" href="kdldoc.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+      <link rel="start" href="index.html" title="Relational PC User's Guide">
+      <link rel="up" href="ch02s02.html" title="Running RPC on Generated Data">
+      <link rel="prev" href="ch02s02.html" title="Running RPC on Generated Data">
+      <link rel="next" href="ch02s03.html" title="Running RPC on Existing Data">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div xmlns:exsl="http://exslt.org/common" class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch02s02.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">Running RPC on Generated Data</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch02s03.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="section" lang="en">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h3 class="title"><a name="d0e830"></a>Interpreting RPC results
+                  </h3>
+               </div>
+            </div>
+         </div>
+         <p>The output from running <code class="filename">runRPC.py</code> contains
+            two important sections:
+            
+         </p>
+         <div class="itemizedlist">
+            <ul type="disc" compact>
+               <li>
+                  <p>a list of independence constraints that describe all
+                         possible treatment and outcome pairs
+                  </p>
+               </li>
+               <li>
+                  <p>a list of dependencies identifying the units for
+                         which the algorithm could not conditionally separate the treatment
+                         and outcome
+                  </p>
+               </li>
+            </ul>
+         </div>
+         <p>
+            
+         </p>
+         <p>For example, the independence constraint
+            
+         </p>
+         <div class="blockquote">
+            <blockquote class="blockquote"><pre class="synopsis">Path [c, bc, b], AttrVar: b.y _||_ Path: [c], AttrVar: c.z | []</pre></blockquote>
+         </div>
+         <p>
+            indicates that the outcome variable (the <span xmlns:exsl="http://exslt.org/common" class="token" style="font-family: sans-serif">z</span>
+            attribute on the <span xmlns:exsl="http://exslt.org/common" class="token" style="font-family: sans-serif">c</span> entity) is conditionally
+            independent of the treatment (the <span xmlns:exsl="http://exslt.org/common" class="token" style="font-family: sans-serif">y</span>
+            attribute on the <span xmlns:exsl="http://exslt.org/common" class="token" style="font-family: sans-serif">b</span> entity related to
+            <span xmlns:exsl="http://exslt.org/common" class="token" style="font-family: sans-serif">c</span> through the
+            <span xmlns:exsl="http://exslt.org/common" class="token" style="font-family: sans-serif">bc</span> relationship), given nothing (the final
+            &#8220;<code class="code">[]</code>&#8221; in the statement).
+         </p>
+         <p>The dependency
+            
+         </p>
+         <div class="blockquote">
+            <blockquote class="blockquote"><pre class="synopsis">(Base: b, Treatment Path &lt;Path: [b, ab, a], AttrVar: a.x&gt;,
+          Outcome Path &lt;Path: [b], AttrVar: b.y&gt;)</pre></blockquote>
+         </div>
+         <p>
+            Indicates that RPC could not conditionally separate the treatment
+            variable (the <span xmlns:exsl="http://exslt.org/common" class="token" style="font-family: sans-serif">x</span> attribute on the 
+            <span xmlns:exsl="http://exslt.org/common" class="token" style="font-family: sans-serif">a</span> entity in the unit <code class="code">[b, ab, a]</code>)
+            from the outcome variable (the <span xmlns:exsl="http://exslt.org/common" class="token" style="font-family: sans-serif">y</span> attribute
+            on the <span xmlns:exsl="http://exslt.org/common" class="token" style="font-family: sans-serif">b</span> entity).
+         </p>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch02s02.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch02s02.html">Up</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch02s03.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">Running RPC on Generated Data&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;Running RPC on Existing Data</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

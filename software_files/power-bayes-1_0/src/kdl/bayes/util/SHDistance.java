@@ -1,0 +1,213 @@
+/**
+ * $Id: SHDistance.java 269 2009-02-20 16:15:32Z afast $
+ *
+ * Part of the open-source PowerBayes system
+ *   (see LICENSE for copyright and license information).
+ */
+
+package kdl.bayes.util;
+
+import kdl.bayes.BayesNet;
+import kdl.bayes.PowerBayesNet;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * SHDistance
+ */
+public class SHDistance {
+    private int tp = 0;
+    private int fp = 0;
+    private int fn = 0;
+    private int numDirectionWrong = 0;
+    private int numUndirWhenDir = 0;
+    private int numDirWhenUndir = 0;
+    private int numTrueCompelled = 0;
+    private int numCorrectCompelled = 0;
+    private int shd = 0;
+    private Set<String> falsePositives = new HashSet<String>();
+    private Set<String> falseNegatives = new HashSet<String>();
+    private Set<String> truePositives = new HashSet<String>();
+
+    public SHDistance(PowerBayesNet bn, PowerBayesNet correctBn) {
+        this(bn.getPDag(), correctBn.getPDag());
+    }
+
+    public SHDistance(BayesNet bn, BayesNet correctBn) {
+        this(bn.getPDag(), correctBn.getPDag());
+    }
+
+    public SHDistance(boolean[][] graph, boolean[][] correctGraph) {
+        this(GraphUtil.convert(graph), GraphUtil.convert(correctGraph));
+    }
+
+    public SHDistance(int[][] graph, int[][] correctGraph) {
+        Assert.condition(graph.length == correctGraph.length,
+                "Expected graphs of the same size");
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = i + 1; j < graph[i].length; j++) {
+                if ((correctGraph[i][j] == 1 && correctGraph[j][i] != 1) || (correctGraph[i][j] != 1 && correctGraph[j][i] == 1)) {
+                    numTrueCompelled++;
+                }
+
+                if (graph[i][j] == correctGraph[i][j] &&
+                        graph[j][i] == correctGraph[j][i] &&
+                        (graph[i][j] < 1 || graph[j][i] < 1) &&
+                        (graph[i][j] == 1 || graph[j][i] == 1)) {
+                    numCorrectCompelled++;
+                }
+
+                if (graph[i][j] == correctGraph[i][j] &&
+                        graph[j][i] == correctGraph[j][i] &&
+                        (graph[i][j] > 0 || graph[j][i] > 0)) {
+                    // graphs agree and edge is present
+                    String edge = i + "," + j;
+                    truePositives.add(edge);
+                    tp++;
+                } else if ((correctGraph[i][j] == 0 && correctGraph[j][i] == 0) &&
+                        (graph[i][j] > 0 || graph[j][i] > 0)) {
+                    // neither edge (i,j) nor (j,i) is in correct graph
+                    // but one edge is in graph
+                    String edge = i + "," + j;
+                    falsePositives.add(edge);
+                    fp++;
+                } else if ((graph[i][j] == 0 && graph[j][i] == 0) &&
+                        (correctGraph[i][j] > 0 || correctGraph[j][i] > 0)) {
+                    // neither edge is in graph, but one is in correct graph
+                    String edge = i + "," + j;
+                    falseNegatives.add(edge);
+                    fn++;
+                } else if (graph[i][j] == 1 && graph[j][i] == 1 &&
+                        (correctGraph[i][j] == 0 || correctGraph[j][i] == 0)) {
+                    // graph has undirected and correct graph has directed
+                    numUndirWhenDir++;
+                } else if (correctGraph[i][j] == 1 && correctGraph[j][i] == 1 &&
+                        (graph[i][j] > 0 || graph[j][i] > 0)) {
+                    // correct graph has undirected and graph has directed
+                    numDirWhenUndir++;
+                } else if ((((graph[i][j] == 1 || graph[j][i] == 1) &&
+                        (graph[i][j] == 0 || graph[j][i] == 0)) ||
+                        (graph[i][j] == 2 && graph[j][i] == 2)) &&
+                        ((correctGraph[i][j] == 1 || correctGraph[j][i] == 1) &&
+                                (correctGraph[i][j] == 0 || correctGraph[j][i] == 0)) &&
+                        (correctGraph[i][j] != graph[i][j] && correctGraph[j][i] != graph[j][i])) {
+                    // edge is directed in both, but have different directions
+                    numDirectionWrong++;
+                }
+            }
+        }
+        shd = fp + fn + numUndirWhenDir + numDirWhenUndir + numDirectionWrong;
+    }
+
+    public int getDistance() {
+        return shd;
+    }
+
+    public Set<String> getFalsePositives() {
+        return falsePositives;
+    }
+
+    public Set<String> getFalseNegatives() {
+        return falseNegatives;
+    }
+
+    public int getNumDirectionWrong() {
+        return numDirectionWrong;
+    }
+
+    public int getNumDirWhenUndir() {
+        return numDirWhenUndir;
+    }
+
+    public int getNumFalseNegatives() {
+        return fn;
+    }
+
+    public int getNumFalsePositives() {
+        return fp;
+    }
+
+    public int getNumTrueCompelled() {
+        return numTrueCompelled;
+    }
+
+    public int getNumTruePositives() {
+        return tp;
+    }
+
+    public int getNumUndirWhenDir() {
+        return numUndirWhenDir;
+    }
+
+    public Set<String> getTruePositives() {
+        return truePositives;
+    }
+
+    /**
+     * Skeleton precision ignores the directions of the edges.
+     * <p/>
+     * Learned Skeleton correct/ learned total edges.
+     *
+     * @return
+     */
+    public double getSPrecision() {
+        double skelCorrect = tp + numDirectionWrong + numDirWhenUndir + numUndirWhenDir;
+        double learnedTotal = skelCorrect + fp;
+
+        return skelCorrect / learnedTotal;
+    }
+
+    /**
+     * Learned skeleton correct/ true total edges.
+     *
+     * @return
+     */
+    public double getSRecall() {
+        double skelCorrect = tp + numDirectionWrong + numDirWhenUndir + numUndirWhenDir;
+        double trueTotal = skelCorrect + fn;
+
+        return skelCorrect / trueTotal;
+    }
+
+    /**
+     * Learned compelled correct/ total learned compelled;
+     *
+     * @return
+     */
+    public double getCPrecision() {
+        double learnCorrect = numCorrectCompelled;
+        double learnCompelled = numCorrectCompelled + numDirectionWrong + numDirWhenUndir;
+
+        if (Double.compare(learnCompelled, 0.0) == 0) {
+            return 0.0;
+        }
+
+        return learnCorrect / learnCompelled;
+    }
+
+    /**
+     * learned compelled correct / total true compelled
+     *
+     * @return
+     */
+
+    public double getCRecall() {
+        double learnCorrect = numCorrectCompelled;
+
+        if (Double.compare(numTrueCompelled, 0.0) == 0) {
+            return 1.0;
+        }
+
+        return learnCorrect / numTrueCompelled;
+    }
+
+    public String toString() {
+        return "[shd=" + shd +
+                " fp=" + fp +
+                " fn=" + fn +
+                " other=" + (numDirectionWrong + numDirWhenUndir + numUndirWhenDir) +
+                " (tp=" + tp + ")" +
+                "]";
+    }
+}

@@ -1,0 +1,97 @@
+/**
+ * $Id$
+ *
+ * Part of the open-source PowerBayes system
+ *   (see LICENSE for copyright and license information).
+ *
+ */
+
+/**
+ * $Id$
+ */
+
+package kdl.bayes.skeleton.util;
+
+import junit.framework.TestCase;
+import kdl.bayes.util.Util;
+import org.apache.log4j.Logger;
+
+import java.util.*;
+
+/**
+ * PowerSetIteratorTest
+ * Author: mhay
+ */
+public class PowerSetIteratorTest extends TestCase {
+    protected static Logger log = Logger.getLogger(PowerSetIteratorTest.class);
+
+    public static String convertToString(Set set) {
+        String s = "";
+        List asList = new ArrayList(set);
+        Collections.sort(asList);
+        for (Iterator iterator = asList.iterator(); iterator.hasNext();) {
+            s += ((Object) iterator.next()).toString() + ",";
+        }
+        return s;
+    }
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        Util.initLog4J();
+    }
+
+    public void testEmptySetIterator() {
+        List<String> items = new ArrayList<String>();
+        items.add("1");
+        items.add("2");
+
+        Set<String> expResults = new HashSet<String>();
+        expResults.add("");
+
+
+        Set<String> results = new HashSet<String>();
+        PowerSetIterator<String> iter = new PowerSetIterator<String>(items, 0);
+        while (iter.hasNext()) {
+            results.add(convertToString((Set) iter.next()));
+        }
+        assertEquals(expResults, results);
+    }
+
+    public void testIterator() {
+        List<Integer> items = new ArrayList<Integer>();
+        items.add(1);
+        items.add(2);
+        items.add(3);
+        items.add(4);
+
+        Set<String> expResults = new HashSet<String>();
+        expResults.add("1,2,3,");
+        expResults.add("1,2,4,");
+        expResults.add("2,3,4,");
+        expResults.add("1,3,4,");
+
+
+        Set<String> results = new HashSet<String>();
+        PowerSetIterator iter = new PowerSetIterator(items, 3);
+        while (iter.hasNext()) {
+            results.add(convertToString((Set) iter.next()));
+        }
+        assertEquals(expResults, results);
+
+
+        expResults = new HashSet<String>();
+        expResults.add("1,2,");
+        expResults.add("1,3,");
+        expResults.add("1,4,");
+        expResults.add("2,3,");
+        expResults.add("2,4,");
+        expResults.add("3,4,");
+
+        results = new HashSet<String>();
+        iter = new PowerSetIterator(items, 2);
+        while (iter.hasNext()) {
+            results.add(convertToString((Set) iter.next()));
+        }
+        assertEquals(expResults, results);
+    }
+}

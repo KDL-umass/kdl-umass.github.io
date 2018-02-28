@@ -1,0 +1,41 @@
+8
+
+dir
+115
+svn+ssh://kittyhawk.cs.umass.edu/nfs/kit/data2/aique-svn/trunk/aique/graphics
+svn+ssh://kittyhawk.cs.umass.edu/nfs/kit/data2/aique-svn
+
+
+
+2008-08-15T16:48:09.792474Z
+114
+loiselle
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+df020232-0d4a-0410-b365-8e467786c0e2
+
+runner-schema.png
+file
+
+
+
+
+2008-08-22T19:42:51.000000Z
+f8eb96457b97f757db1b889b073e66ae
+2008-08-15T16:48:09.792474Z
+114
+loiselle
+has-props
+

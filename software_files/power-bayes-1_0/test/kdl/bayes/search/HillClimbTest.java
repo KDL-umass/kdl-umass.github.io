@@ -1,0 +1,37 @@
+/**
+ * $Id: HillClimbTest.java 237 2008-04-07 16:54:03Z afast $
+ *
+ * Part of the open-source PowerBayes system
+ *   (see LICENSE for copyright and license information).
+ *
+ */
+
+/**
+ * $Id: HillClimbTest.java 237 2008-04-07 16:54:03Z afast $
+ */
+
+package kdl.bayes.search;
+
+import junit.framework.TestCase;
+import kdl.bayes.util.Util;
+import org.apache.log4j.Logger;
+
+/**
+ * HillClimbTest
+ */
+public class HillClimbTest extends TestCase {
+    protected static Logger log = Logger.getLogger(HillClimbTest.class);
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        Util.initLog4J();
+    }
+
+    public void testSearch() {
+        TestSearchProblem problem = new TestSearchProblem();
+        TestSearchState state = (TestSearchState) HillClimb.search(problem);
+        assertEquals(1, state.getX());
+        assertEquals(1, state.getY());
+        assertEquals(3, problem.getScore(state), 0.0000001);
+    }
+}

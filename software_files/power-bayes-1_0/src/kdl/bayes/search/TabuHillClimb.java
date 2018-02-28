@@ -1,0 +1,146 @@
+/**
+ * $Id: TabuHillClimb.java 264 2008-11-10 19:25:11Z afast $
+ *
+ * Part of the open-source PowerBayes system
+ *   (see LICENSE for copyright and license information).
+ */
+
+package kdl.bayes.search;
+
+import kdl.bayes.util.Assert;
+import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+/**
+ * TabuHillClimb
+ */
+public class TabuHillClimb {
+    protected static Logger log = Logger.getLogger(TabuHillClimb.class);
+    private static double epsilon = 0.00001;
+
+    public static SearchState search(SearchProblem problem) {
+        return search(problem, 15, 100);
+    }
+
+    public static SearchState searchWithRestarts(SearchProblem problem) {
+        return searchWithRestarts(problem, 15, 100, 10);
+    }
+
+    public static SearchState searchWithRestarts(SearchProblem problem, int numRestarts) {
+        return searchWithRestarts(problem, 15, 100, numRestarts);
+    }
+
+    /**
+     * Search method implementing random restarts.
+     *
+     * @param problem
+     * @param maxSteps
+     * @param maxMemory
+     * @param numRestarts
+     * @return
+     */
+    public static SearchState searchWithRestarts(SearchProblem problem, int maxSteps, int maxMemory, int numRestarts) {
+        log.info("Starting search with " + numRestarts + " restarts.");
+        SearchState bestState = search(problem, maxSteps, maxMemory);
+        double bestScore = problem.getScore(bestState);
+        for (int i = 2; i <= numRestarts; i++) {
+            SearchState nextState = search(problem, maxSteps, maxMemory);
+            double nextScore = problem.getScore(nextState);
+            if (Double.compare(nextScore, bestScore) > 0) {
+                bestScore = nextScore;
+                bestState = nextState;
+            }
+        }
+        log.info("overall search concluded. best state has score of " + bestScore);
+        return bestState;
+    }
+
+    public static SearchState search(SearchProblem problem, int maxSteps, int maxMemory) {
+        // initialize
+        SearchState currState = problem.getInitialState();
+        double currentScore = problem.getScore(currState);
+        log.debug("Starting search with cost = " + currentScore);
+
+        List<SearchState> visitedStates = new ArrayList<SearchState>(maxMemory);
+        double bestScore = Double.NEGATIVE_INFINITY;
+        List<SearchState> bestStates = new ArrayList<SearchState>();
+
+        int stepsDownhill = 0;
+        int step = 1;
+
+        while (stepsDownhill <= maxSteps) {
+            log.debug(currState.toString());
+
+            Collection successors = problem.getSuccessors(currState);
+            log.debug("Step " + step++ + " evaluating " + successors.size() + " successors");
+            SearchState bestState = null;
+            List<SearchState> bestSuccessors = new ArrayList<SearchState>();
+
+            for (Object successor : successors) {
+                SearchState succState = (SearchState) successor;
+
+                // if successor in visited states, then skip it
+                boolean alreadyVisited = false;
+                for (SearchState visitedState : visitedStates) {
+                    if (succState.isSame(visitedState)) {
+                        alreadyVisited = true;
+                        break;
+                    }
+                }
+                if (alreadyVisited) {
+                    continue;
+                }
+
+                double successorScore = problem.getScore(succState);
+
+
+                if (problem.compareStates(succState, bestState) > 0) {
+                    bestSuccessors.clear();
+                    bestState = succState;
+                }
+
+                if (problem.compareStates(succState, bestState) == 0) {
+                    bestSuccessors.add(succState);
+                }
+            }
+
+            // all successors are on the tabu list of visited states, terminate search
+            if (bestSuccessors.size() == 0) {
+                break;
+            }
+
+            // always move the best successor state
+            currState = problem.breakTies(bestSuccessors);
+            //log.info(currState.toString());
+            currentScore = problem.getScore(currState);
+            currState.makeCurrentState();
+
+            visitedStates.add(currState);
+            while (visitedStates.size() > maxMemory) {
+                visitedStates.remove(0);
+            }
+
+            // is this state better than anything we have ever seen?
+            if (Double.compare(currentScore, bestScore) > 0) {
+                bestStates.clear();
+                bestStates.add(currState);
+                bestScore = currentScore;
+                stepsDownhill = 0;
+            } else {
+                if (stepsDownhill == 0) {
+                    log.debug("Hit plateau");
+                }
+                stepsDownhill++;
+            }
+        }
+
+        Assert.condition(bestStates.size() > 0, "Found no best state!");
+        SearchState bestState = problem.breakTies(bestStates);
+        log.info("search concluded. best state has score of " + bestScore);
+        return bestState;
+
+    }
+}
