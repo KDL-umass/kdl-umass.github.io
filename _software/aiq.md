@@ -1,11 +1,21 @@
 ---
+permalink: aiq.html
 layout: page
 ---
-Relational Causal Discovery (RCD) is a sound and complete algorithm for learning causal models from relational data.  RCD employs a novel rule, called relational bivariate orientation, that can can detect the orientation of a bivariate dependency with no assumptions on the underlying distribution.  Combined with relational extensions to the rules utilized by the PC algorithm[1], RCD is provably sound and complete under the causal sufficiency assumption.  Given a database and schema, RCD outputs a partially directed model that represents the equivalence class of statistically indistinguishable relational causal models.
 
-Download RCD 1.0 distribution
+<h1> AIQ </h1>
+<p> </p>
 
-RCD is designed and implemented by the Knowledge Discovery Laboratory in the College of Information and Computer Sciences at the University of Massachusetts Amherst. See “A Sound and Complete Algorithm for Learning Causal Models from Relational Data” (Maier, et al., UAI 2013)  for additional information on RCD.
+AIQ 1.0 (automated identification of quasi-experiments) is a proof-of-concept prototype system for automatically discovering quasi-experiments for causal inference. AIQ identifies possible quasi-experiments that can be performed on a specified data set with the aim of finding causal relationships.
 
+Quasi-experiments exploit fortuitous circumstances in non-experimental data that enable causal inference, even in the absence of familiar control and randomization methods. AIQ automatically identifies appropriate experimental units and associated variables (possible causes and effects) and suggests quasi-experimental designs for evaluation and refinement by a human experimenter.
 
-[1] Spirtes, P., Glymour, C., and Scheines, R. (2000) Causation, Prediction and Search, MIT Press.
+AIQ 1.0 is written in Prolog and runs in the SWI Prolog interpreter. The AIQ distribution includes
+
+- Prolog source code
+- Example data schema files
+- README file containing instructions for defining new data schemas and using AIQ
+
+**[Download AIQ 1.0 distribution](./software_files/aiq_1_0.zip)**
+
+AIQ is designed and implemented by the [Knowledge Discovery Laboratory](https://kdl.cs.umass.edu) in the [College of Information and Computer Sciences](https://www.cics.umass.edu/) at the [University of Massachusetts Amherst](https://umass.edu). See “Automatic Identification of Quasi-Experimental Designs for Discovering Causal Knowledge” (Jensen, et al., KDD 2008) for additional information on AIQ.
