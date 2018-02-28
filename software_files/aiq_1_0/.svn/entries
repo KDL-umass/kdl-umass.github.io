@@ -1,68 +1,0 @@
-8
-
-dir
-115
-svn+ssh://kittyhawk.cs.umass.edu/nfs/kit/data2/aique-svn/trunk/aique
-svn+ssh://kittyhawk.cs.umass.edu/nfs/kit/data2/aique-svn
-
-
-
-2008-08-20T19:25:02.483814Z
-115
-loiselle
-
-
-svn:special svn:externals svn:needs-lock
-
-
-
-
-
-
-
-
-
-
-
-df020232-0d4a-0410-b365-8e467786c0e2
-
-graphics
-dir
-
-prolog
-dir
-
-LICENSE
-file
-
-
-
-
-2008-08-14T15:08:15.000000Z
-4d3b59b7512b0458a5aaddff203debcc
-2008-08-14T15:08:11.924251Z
-113
-afast
-has-props
-
-schemas
-dir
-
-demo
-dir
-
-README
-file
-
-
-
-
-2008-08-22T19:42:53.000000Z
-162f872983717b6d2b00e465c097fcb6
-2008-08-20T19:25:02.483814Z
-115
-loiselle
-
-sandbox
-dir
-

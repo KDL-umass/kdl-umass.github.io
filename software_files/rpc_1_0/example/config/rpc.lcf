@@ -1,5 +1,0 @@
-log4j.rootLogger=DEBUG, A1
-
-log4j.appender.A1=org.apache.log4j.ConsoleAppender
-log4j.appender.A1.layout=rpc.util.TimeStampLayout
-log4j.appender.A1.layout.ConversionPattern=%-9r %-5p %c{2}: %m%n

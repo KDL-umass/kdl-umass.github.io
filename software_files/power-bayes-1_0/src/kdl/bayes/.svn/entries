@@ -1,68 +1,0 @@
-8
-
-dir
-286
-svn+ssh://kittyhawk.cs.umass.edu/nfs/kit/data2/power-bayes/trunk/power/src/kdl/bayes
-svn+ssh://kittyhawk.cs.umass.edu/nfs/kit/data2/power-bayes
-
-
-
-2009-09-23T19:35:24.224883Z
-286
-afast
-
-
-svn:special svn:externals svn:needs-lock
-
-
-
-
-
-
-
-
-
-
-
-b35983ed-114a-0410-ac04-bdf47c5510a9
-
-BayesNet.java
-file
-
-
-
-
-2009-09-23T19:01:33.000000Z
-84f792cb1eb43c966855ef6774163512
-2009-02-20T16:15:32.950671Z
-269
-afast
-
-PowerBayesNet.java
-file
-
-
-
-
-2009-09-23T19:01:33.000000Z
-8985d7b42fd8beb65363b39139595ea8
-2009-02-18T20:12:07.425451Z
-267
-afast
-has-props
-
-edge
-dir
-
-experiments
-dir
-
-search
-dir
-
-skeleton
-dir
-
-util
-dir
-
