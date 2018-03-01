@@ -1,6 +1,6 @@
 <h1>Causal Modeling</h1>
 <ul>
-<li class="nobullet pub">A/B Testing in Networks with Adversarial Members &mdash; K. Clary and D. Jensen (2017). In: 13th International Workshop on Mining and Learning with Graphs at the 23rd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. [<a href="http://www.mlgworkshop.org/2017/paper/MLG2017_paper_27.pdf">PDF</a>]
+<li class="nobullet pub">A/B Testing in Networks with Adversarial Members &mdash; K. Clary and D. Jensen (2017). In 13th International Workshop on Mining and Learning with Graphs at the 23rd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. [<a href="http://www.mlgworkshop.org/2017/paper/MLG2017_paper_27.pdf">PDF</a>]
 </li>
 
 <li class="nobullet pub">Inferring network effects in relational data &mdash; D. Arbour, D. Garant, and D. Jensen (2016). In Proceedings of 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. [<a href="http://auai.org/uai2015/proceedings/papers/86.pdf">PDF</a>]
@@ -14,6 +14,9 @@
 
 <li class="nobullet pub">Learning the structure of causal models with relational and temporal dependence &mdash; K. Marazopoulou, M. Maier, and D. Jensen (2015). In Proceedings of Thirty-first Conference on Uncertainty in Artificial Intelligence. <a href="http://auai.org/uai2015/proceedings/papers/86.pdf">PDF</a>]
 </li> 
+
+<li class="nobullet pub">Propensity score matching for causal inference with relational data &mdash; D. Arbour, K. Marazopoulou, D. Garant, and D. Jensen (2014). Causal Inference: Learning and Prediction Workshop at UAI. [<a href="https://staff.fnwi.uva.nl/j.m.mooij/uai2014-causality-workshop/papers/paper5.pdf">PDF</a>]
+</li>
 
 <li class="nobullet pub">Reasoning about independence in probabilistic models of relational data &mdash; M. Maier, K. Marazopoulou, and D. Jensen (2014). arXiv:1302.4381. [<a href="http://arxiv.org/pdf/1302.4381v3.pdf">PDF</a>]
 </li>
@@ -36,6 +39,10 @@
 
 <h1>Statistical Relational Learning</h1>
 <ul>
+
+<li class="nobullet pub">Refining the semantics of social influence &mdash; K. Marazopoulou, D. Arbour, and D. Jensen (2014). In Networks: From Graphs to Rich Data. NIPS Workshop. [<a href="http://arxiv.org/pdf/1412.5238v1.pdf">PDF</a>]
+</li>
+
 <li class="nobullet pub">Relational dependency networks &mdash; J. Neville and D. Jensen (2007). Journal of Machine Learning Research. 8(Mar): 653-692. [<a href="https://kdl.cs.umass.edu/papers/neville-jmlr2007.pdf">PDF</a>] 
 </li>
 
