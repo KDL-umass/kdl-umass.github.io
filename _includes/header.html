@@ -25,15 +25,26 @@
   -->
 </div>
 
-<!-- For navigation bar-->
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-faded sticky-top site-header" role="navigation">
-  <a class="navbar-brand site-header" id="header_words" href="#">{{ site.title }}</a>
-  <div class="collapse navbar-collapse">
-    <ul class="navbar-nav">
+<!-- For navigation bar -->
+<nav class="navbar navbar-toggleable-sm navbar-inverse bg-faded sticky-top site-header" role="navigation">
+  <button class="navbar-toggle navbar-toggle-right hidden-md-up"
+          type="button"
+          data-toggle="collapse"
+          data-target="#asdf"
+          aria-controls="asdf"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="navbar-brand site-header hidden-sm-down" id="header_words" href="#">{{ site.title }}</a>
+  <div class="collapse navbar-collapse" id="asdf">
+    <ul class="nav navbar-nav">
       {% for page in site.nav %}
       {% if page.text %}
-      <li class="nav-item site-header">
-        <a class="page-link nav-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.text }}</a>&nbsp;&nbsp;
+      <li class="nav-item" style="font-size:17pt;">
+        <a class="nav-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.text }}</a>&nbsp;&nbsp;
       </li>
       {% endif %}
       {% endfor %}
