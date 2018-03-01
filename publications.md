@@ -6,7 +6,7 @@
 <li class="nobullet pub">Inferring network effects in relational data &mdash; D. Arbour, D. Garant, and D. Jensen (2016). In Proceedings of 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. [<a href="http://auai.org/uai2015/proceedings/papers/86.pdf">PDF</a>]
 </li>
 
-<li class="nobullet pub">[Inferring causal direction from relational data] &mdash; D. Arbour, K. Marazopoulou, and D. Jensen (2016). In Proceedings of Thirty-second Conference on Uncertainty in Artificial Intelligence. [<a href="http://auai.org/uai2016/proceedings/papers/217.pdf">PDF</a>]
+<li class="nobullet pub">Inferring causal direction from relational data &mdash; D. Arbour, K. Marazopoulou, and D. Jensen (2016). In Proceedings of Thirty-second Conference on Uncertainty in Artificial Intelligence. [<a href="http://auai.org/uai2016/proceedings/papers/217.pdf">PDF</a>]
 </li>
 
 <li class="nobullet pub">Evaluating causal models by comparing interventional distributions &mdash; D. Garant and D. Jensen (2016). SIGKDD Workshop on Causation. [<a href="https://arxiv.org/abs/1608.04698">PDF</a>]
@@ -35,7 +35,6 @@
 
 <h1>Statistical Relational Learning</h1>
 <ul>
-
 <li class="nobullet pub">Relational dependency networks &mdash; J. Neville and D. Jensen (2007). Journal of Machine Learning Research. 8(Mar): 653-692. [<a href="https://kdl.cs.umass.edu/papers/neville-jmlr2007.pdf">PDF</a>] 
 </li>
 
