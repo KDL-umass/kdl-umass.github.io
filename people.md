@@ -39,7 +39,7 @@ layout: page
 
 <!-- For alums-->
 <br>
-<h1><font size="6">Alumni</font></h1>
+<h1 align="center"><font size="6">Alumni</font></h1>
 
 - [Dan Corkill](https://people.cs.umass.edu/~cork/) (Senior Research Scientist, 2003-2018)
 - [Hüseyin Oktay](https://www.linkedin.com/in/huseyin-oktay-715aa915/) (PhD, 2017) — Apple
