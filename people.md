@@ -19,7 +19,7 @@ years:
 - 2003
 - 2002
 - 2001
-- 200
+- 2000
 ---
 
 <!-- For individual bios-->
@@ -34,7 +34,8 @@ years:
     <div class="col-sm-6 col-md-6 col-lg-6" style="margin-bottom:25px">
       <img alt="{{ member.name }}"
            src="{{ member.thumbnail }}"
-           class="thumbnail col-sm-12 col-xs-12"/>
+           class="thumbnail hidden-xs"/>
+      <div>
       <ul class="nobullet">
         <li><b><a href="{{ member.webpage }}">{{ member.name }}</a></b></li>
         <li><b>{{ member.role }}</b></li>
@@ -45,6 +46,7 @@ years:
         <li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;{{ member.email }}</li>
 	{% endif %}
       </ul>
+      </div>
       <p> {{ member.content }}</p>
     </div>
 {% if left %}
