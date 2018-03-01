@@ -1,17 +1,3 @@
-#{% for topic in page.topics %}
-#  {% assign y1 = topic %}
-#  <h1>{{ topic }}</h1>
-#  <ul>
-#    {% for pub in site.pubs %}
-#    {% assign y2 = pub.topic %}
-#    {% if y1 == y2 %}
-#    <li class="nobullet pub"><a href="{{ pub.permalink }}">{{ pub.title }}</a>&nbsp;&mdash;&nbsp;{{ pub.authors }} ({{ pub.year }}). In Proceedings of {{ pub.venue }}. [<a href="{{ pub.pdfurl }}">PDF</a>]</li>
-#    {% endif %}
-#    {% endfor %}
-#  </ul>
-#{% endfor %}
-
-
 <h1>Causal Modeling</h1>
 <ul>
 <li class="nobullet pub">A/B Testing in Networks with Adversarial Members &mdash; K. Clary and D. Jensen (2017). In: 13th International Workshop on Mining and Learning with Graphs at the 23rd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. [<a href="http://www.mlgworkshop.org/2017/paper/MLG2017_paper_27.pdf">PDF</a>]
@@ -45,6 +31,7 @@
 
 <li class="nobullet pub">Automatic identification of quasi-experimental designs for discovering causal knowledge &mdash; D. Jensen, A. Fast, B. Taylor, and M. Maier (2008).  In Proceedings of 14th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. [<a href="https://kdl.cs.umass.edu/papers/jensen-et-al-kdd2008.pdf">PDF</a>]
 </li>
+</ul>
 
 <h1>Statistical Relational Learning</h1>
 <ul>
