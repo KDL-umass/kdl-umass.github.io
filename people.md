@@ -1,5 +1,25 @@
 ---
 layout: page
+years:
+- 2018
+- 2017
+- 2016
+- 2015
+- 2014
+- 2013
+- 2012
+- 2011
+- 2010
+- 2009
+- 2008
+- 2007
+- 2006
+- 2005
+- 2004
+- 2003
+- 2002
+- 2001
+- 200
 ---
 
 <!-- For individual bios-->
@@ -7,13 +27,14 @@ layout: page
   {% assign left = true %}
   {% for member in site.people %}
   {% if member.publish and member.name %}
+  {% unless member.alum %}
     {% if left %}
       <div class='row'>
     {% endif %}
     <div class="col-sm-6 col-md-6 col-lg-6" style="margin-bottom:25px">
       <img alt="{{ member.name }}"
            src="{{ member.thumbnail }}"
-           class="thumbnail col-sm-12"/>
+           class="thumbnail col-sm-12 col-xs-12"/>
       <ul class="nobullet">
         <li><b><a href="{{ member.webpage }}">{{ member.name }}</a></b></li>
         <li><b>{{ member.role }}</b></li>
@@ -32,30 +53,43 @@ layout: page
   </div>
   {% assign left = true %}
 {% endif %}
-{% endif %}
+{% endunless %}{% endif %}
 {% endfor %}
 </div>
 
 <!-- For alums-->
 <br>
 <h1 align="center"><font size="6">Alumni</font></h1>
-
-- [Dan Corkill](https://people.cs.umass.edu/~cork/) (Senior Research Scientist, 2003-2018)
-- [Hüseyin Oktay](https://www.linkedin.com/in/huseyin-oktay-715aa915/) (PhD, 2017) — Apple
-- [Katerina Marazopoulou](https://www.linkedin.com/in/katerina-marazopoulou) (PhD, 2017) — Facebook
-- [David Arbour](https://www.linkedin.com/in/david-arbour/) (PhD, 2017) — Facebook
-- [Lisa Friedland](http://www.lazerlab.net/people/lisa-friedland) (PhD, 2016) — Northeastern University
-- [Matthew Cornell](https://www.linkedin.com/in/matthewcornell/) (Research Software Architect, 1999-2007, 2011-2015) 
-- [Brian Taylor](https://www.linkedin.com/in/brianjtaylor1/) (PhD, 2015) — Amazon
-- [Daniel Garant](https://www.linkedin.com/in/danielgarant/) (MS, 2015) — C&S Wholesale Grocers
-- [Lissa Baseman](http://lissalytics.com/) (MS, 2015) — Los Alamos National Laboratory
-- [Marc Maier](https://www.linkedin.com/in/maiermarc/) (PhD, 2014) — MassMutual
-- [Phillip Kirlin](http://www.cs.rhodes.edu/%7Ekirlinp/) (PhD, 2014) — Rhodes College
-- [Matthew Rattigan](https://www.linkedin.com/in/mattratt/) (PhD, 2012) — University of Massachusetts Amherst
-- [Andrew Fast](https://www.linkedin.com/in/andrew-fast-2a2b483/) (PhD, 2010) — CounterFlow AI
-- [Michael Hay](http://www.colgate.edu/facultysearch/FacultyDirectory/michael-hay) (PhD, 2010) — Colgate University
-- [Agustin Schapira](http://www.agustinschapira.com) (Senior Software Architect, 2002-2007) 
-- [Amy McGovern](http://www.mcgovern-fagg.org/amy/) (Postdoc, 2002-2004) 
-- [Brian Gallagher](https://people.llnl.gov/gallagher23) (MS, 2004) — Lawrence Livermore National Laboratory
-- [Ross Fairgrieve](https://www.linkedin.com/in/ross-fairgrieve-b219612/) (MS, 2004) — Tumblr
-- [Jennifer Neville](https://www.cs.purdue.edu/homes/neville/) (PhD, 2006) — Purdue University
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+<ul class="nobullet">
+{% assign numleftcol = 0 %}
+{% assign onleftcol = true %}
+{% assign pad = true %}
+{% for year in page.years %}
+   {% assign numpeople = site.people | size %}
+   {% assign leftcolsize = numpeople | divided_by: 2 %}
+       {% for person in site.people %}
+         {% if numleftcol >= leftcolsize and onleftcol %}
+           </ul></div>
+           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+           <ul class="nobullet">
+           {% assign onleftcol = false %}
+         {% endif %}
+         {% assign temp = numleftcol | plus: 1 %}
+         {% if person.alum and person.endyear == year %}
+           {% assign numleftcol = temp %}
+           <li><a href="{{ person.webpage }}">{{ person.name }}</a>
+             ({% if person.role %}{{ person.role }}{% else %}{{ person.degree }}{% endif %},
+              {% if person.startyear %}{{ person.startyear }}-{% endif %}{{ person.endyear }}) - {{ person.current }}
+           </li>
+         {% endif %}
+         {% unless person.alum %}
+           {% if pad %}
+             {% assign numleftcol = temp %}
+             {% assign pad = false %}
+           {% endif %}
+         {% endunless %}
+     {% endfor %}
+{% endfor %}
+</ul></div></div>
