@@ -40,8 +40,8 @@ nav:
     url: /recent_news.html
   - text: Software
     url: /software.html
-  - text: Data
-    url: /data.html
+#  - text: Data
+#    url: /data.html
 
 collections:
   people:
