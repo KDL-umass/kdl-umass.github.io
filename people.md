@@ -10,18 +10,17 @@ layout: page
     {% if left %}
       <div class='row'>
     {% endif %}
-    <div class="col-sm-6 col-md-6 col-lg-6">
+    <div class="col-sm-6 col-md-6 col-lg-6" style="margin-bottom:25px">
       <img alt="{{ member.name }}"
            src="{{ member.thumbnail }}"
            class="thumbnail"/>
       <ul class="nobullet">
         <li><b><a href="{{ member.webpage }}">{{ member.name }}</a></b></li>
-        <li><b>{{ member.role }}</b>
-            {% if member.hastitle %}
-              &nbsp;&middot;&nbsp;&nbsp;{{ member.title }}
-            {% endif %}
-        </li>
-	{% if member.email %}
+        <li><b>{{ member.role }}</b></li>
+        {% if member.hastitle %}
+           <li>{{ member.title }}</li>
+        {% endif %}
+ 	{% if member.email %}
         <li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;{{ member.email }}</li>
 	{% endif %}
       </ul>
