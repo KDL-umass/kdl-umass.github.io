@@ -3,7 +3,7 @@ layout: page
 ---
 
 <p>
-  <img src="wordcloud.png" width="350" align="left" style="padding-right: 10px"/>
+  <img src="wordcloud.png" width="350px" align="left" class="hidden-xs" style="padding-right: 10px"/>
 </p>
 
 The Knowledge Discovery Laboratory (KDL) is a research group in the College of Information and Computer Sciences at the University of Massachusetts Amherst.  We study the foundations of machine learning, develop innovative technologies for exploring and modeling complex data sets, and we apply those technologies to practical tasks in areas such as explainable artificial intelligence, computational social science, management of cyber-physical systems, scientific data analysis, network science, and fraud detection.
