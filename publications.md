@@ -45,7 +45,6 @@
 
 <li class="nobullet pub">Automatic identification of quasi-experimental designs for discovering causal knowledge &mdash; D. Jensen, A. Fast, B. Taylor, and M. Maier (2008).  In Proceedings of 14th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. [<a href="https://kdl.cs.umass.edu/papers/jensen-et-al-kdd2008.pdf">PDF</a>]
 </li>
-</ul>
 
 <h1>Statistical Relational Learning</h1>
 <ul>
