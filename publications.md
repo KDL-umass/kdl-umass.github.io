@@ -25,6 +25,7 @@
 </li>
 
 <li class="nobullet pub">Causal discovery in social media using quasi-experimental designs &mdash; H. Oktay, B. Taylor, and D. Jensen (2010). In Proceedings of the SIGKDD Workshop on Social Media Analytics. [<a href="https://kdl.cs.umass.edu/papers/oktay-et-al-soma2010.pdf">PDF</a>]
+</li>
 
 <li class="nobullet pub">Relational blocking for causal discovery &mdash; M. Rattigan, M. Maier, and D. Jensen (2011). In Proceedings of the Twenty-Fifth AAAI Conference on Artificial Intelligence. [<a href="https://kdl.cs.umass.edu/papers/rattigan-etal_aaai2011.pdf">PDF</a>]
 </li>
