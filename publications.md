@@ -12,7 +12,7 @@
 <li class="nobullet pub">Evaluating causal models by comparing interventional distributions &mdash; D. Garant and D. Jensen (2016). SIGKDD Workshop on Causation. [<a href="https://arxiv.org/abs/1608.04698">PDF</a>]
 </li>
 
-<li class="nobullet pub">Learning the structure of causal models with relational and temporal dependence &mdash; K. Marazopoulou, M. Maier, and D. Jensen (2015). In Proceedings of Thirty-first Conference on Uncertainty in Artificial Intelligence. <a href="http://auai.org/uai2015/proceedings/papers/86.pdf">PDF</a>]
+<li class="nobullet pub">Learning the structure of causal models with relational and temporal dependence &mdash; K. Marazopoulou, M. Maier, and D. Jensen (2015). In Proceedings of Thirty-first Conference on Uncertainty in Artificial Intelligence. [<a href="http://auai.org/uai2015/proceedings/papers/86.pdf">PDF</a>]
 </li> 
 
 <li class="nobullet pub">Propensity score matching for causal inference with relational data &mdash; D. Arbour, K. Marazopoulou, D. Garant, and D. Jensen (2014). Causal Inference: Learning and Prediction Workshop at UAI. [<a href="https://staff.fnwi.uva.nl/j.m.mooij/uai2014-causality-workshop/papers/paper5.pdf">PDF</a>]
