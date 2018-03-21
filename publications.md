@@ -1,3 +1,6 @@
+---
+layout: page
+---
 <h1>Causal Modeling</h1>
 <ul>
 <li class="nobullet pub">A/B Testing in Networks with Adversarial Members &mdash; K. Clary and D. Jensen (2017). In 13th International Workshop on Mining and Learning with Graphs at the 23rd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. [<a href="http://www.mlgworkshop.org/2017/paper/MLG2017_paper_27.pdf">PDF</a>]
