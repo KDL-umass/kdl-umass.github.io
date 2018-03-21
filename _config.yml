@@ -3,12 +3,12 @@ title: Knowledge Discovery Laboratory
 # Build settings
 markdown: kramdown
 theme: minima
-# plugins:
-# - jekyll-feed
-# - jekyll-paginate
-# paginate: 5
-# posts: _posts
-# paginate_path: "/blog/page:num"
+plugins:
+ - jekyll-feed
+ - jekyll-paginate
+paginate: 5
+posts: _posts
+paginate_path: "/blog/page:num"
 
 # Set this to your disqus shortname to enable comments. Note that the 'comments'
 # setting below must also be true. Individual posts can override 'comments' to
@@ -19,14 +19,10 @@ comments: true
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
-# exclude:
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
 
 # Explicitly enumerated here so that we can control the ordering
 nav:
@@ -42,6 +38,8 @@ nav:
     url: /software.html
 #  - text: Data
 #    url: /data.html
+#  - text: Blog
+#    url: /blog/index.html
 
 collections:
   people:
@@ -52,9 +50,17 @@ collections:
     output: true
   software:
     output: true
+  drafts:
+    output: true
 
 authors:
   etosch:
+    github: etosch
     first: Emma
     last: Tosch
-
+    website: http://cics.umass.edu/~etosch
+  kclary:
+    github: kclary
+    first: Kaleigh
+    last: Clary
+    website: http://cics.umass.edu/~kclary

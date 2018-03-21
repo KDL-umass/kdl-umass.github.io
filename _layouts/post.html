@@ -6,12 +6,19 @@ excerpt_separator: <!--break-->
 
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <div class="well">
-    <h1>
-      <a href="{{ site.baseurl }}{{ page.url }}">{{ page.date | date: "%b %-d, %Y" }} - {{ page.title }}</a></h1>
-
-    <p class="author">Written by {% for author in page.author %}
-      @{{ author }}&nbsp;&middot;
-      {% endfor %}
+    <h2>{{ page.title }}&nbsp;&middot;&nbsp;({{ page.date | date: "%b %-d, %Y" }})</h2>
+    {% if page.subtitle %}
+      <h3>{{ page.subtitle }}</h3>
+    {% endif %}
+    {% if page.authors %}
+      <p class="author">Written by
+        {% for author in page.authors %}
+          {% assign author_data = site.authors[author] %}
+          <a href="{{ author_data.website }}">
+            {{ author_data.first }}&nbsp{{ author_data.last }}
+          </a>&nbsp;&middot;
+        {% endfor %}
+    {% endif %}
       <a href="{{ site.baseurl }}{{ page.url }}#disqus_thread" data-disqus-identifier="{{ post.url | slugify }}">Comments</a>
     </p>
     

@@ -14,7 +14,8 @@ layout: page
     </h3>
     {% endif %}
     <p class="post-meta">
-      {% assign author = site.authors[post.author] %}
+      {% assign poster = post.authors[0] %}
+      {% assign author = site.authors[poster] %}
       Posted on {{ post.date | date: "%B %-d, %Y" }} by {{ author.first  }} {{ author.last }}
     </p>
     <div class="post-entry preview">

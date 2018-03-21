@@ -2,6 +2,7 @@
 layout: page
 ---
 
+- [Kaleigh Clary](http://cs.umass.edu/~kclary) was selected to participate in this year's class of fellows at the [Data Science for Social Good (DSSG)](https://dssg.uchicago.edu) Summer Program at the University of Chicago (3/19/2018).
 - [Akanksha Atrey](https://cs.umass.edu/~aatrey) was selected to attend the CRA-W Grad Cohort for Women Workshop in April.
 - [David Jensen](http://people.cs.umass.edu/~jensen/) gave a talk at CMU's [Heinz College of Information Systems and Public Policy](https://www.heinz.cmu.edu/) on "Explainable Artificial Intelligence: Opportunities and Challenges for Public Policy." (2/19/2018)
 - [David Jensen](http://people.cs.umass.edu/~jensen/) gave a distinguished lecture at the [Center for Causal Discovery](https://www.ccd.pitt.edu/) at the University of Pittsburgh on "The Case for Empirical Evaluation of Methods for Causal Modeling." (2/15/2018)
