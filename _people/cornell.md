@@ -7,5 +7,5 @@ webpage: https://www.linkedin.com/in/matthewcornell/
 role: Research Software Architect
 startyear: 1999
 endyear: 2015
-current: UMass Medical
+current: 
 ---
