@@ -3,22 +3,11 @@ layout: page
 ---
 
 <div class="pub">
-
-  <ul class="nobullet">
-    <li> <b>Title</b>: {{ page.title }} </li>
-    <li> <b>Authors</b>:  {{ page.authors }}</li>
-    <li> <b>Venue</b>: {{ page.venue }}</li>
-    <li> <b>Year</b>: {{ page.year }}<li>
-      <ul>
-
-        <h2>Citation and link</h2>
-        <p>{{ page.authors }} ({{ page.year }}). {{ page.title }} In {{ page.venue }}. [<a href="{{page.pdfurl}}">PDF</a>]
-
-        <h2>Abstract</h2>
-        <p>{{ page.abstract }}</p>
-        <p><b>PDF</b>: {{ page.pdfurl }}</p>
-
-        <h2>BibTex</h2>
-        <div class="bibtex">{{ content }}</div>
-
+<p>
+  <b>Title</b>: {{ page.title }} <br/>
+  <b>Authors</b>:  {{ page.authors }} <br/>
+  <b>Venue</b>: {{ page.longvenue }}<br/>
+  <b>Year</b>: {{ page.year }}<br/>
+<p>{{ content }}</p>
+</p>
 </div>

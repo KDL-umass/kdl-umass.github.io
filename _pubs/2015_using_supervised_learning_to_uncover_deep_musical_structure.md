@@ -1,7 +1,7 @@
 ---
 layout: pub
 title: Using Supervised Learning to Uncover Deep Musical Structure
-topic: ?
+topic: 
 authors: P. Kirlin and D. Jensen
 venue: Proceedings of the Twenty-Ninth AAAI Conference on Artificial Intelligence
 year: 2015

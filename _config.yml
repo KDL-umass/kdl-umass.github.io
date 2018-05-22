@@ -24,6 +24,18 @@ exclude:
   - Gemfile.lock
   - node_modules
 
+topics:
+  - key: causal
+    text: Causal Modeling
+  - key: relational
+    text: Statistical Relational Learning
+  - key: networks
+    text: Navigation and Routing in Networks
+  - key: privacy
+    text: Privacy and Networks
+  - key: fraud
+    text: Fraud Detection and Security
+
 # Explicitly enumerated here so that we can control the ordering
 nav:
   - text: About
