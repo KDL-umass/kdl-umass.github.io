@@ -3,8 +3,6 @@ layout: page
 publish: true
 name: Reilly
 role: Graduate Student
-hastitle: true 
-title: Research Assistant
 thumbnail: images/reilly.jpg
 webpage: http://www.cs.umass.edu/~rngrant
 email: rngrant@cs.umass.edu
