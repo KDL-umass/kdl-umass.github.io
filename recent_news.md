@@ -11,7 +11,7 @@ layout: page
   - [Emma Tosch](http://cs.umass.edu/~etosch) will be presenting [Toybox: Better Atari Environments for Testing Reinforcement Learning Agents]() at the [Systems for Machine Learning Workshop](http://learningsys.org/nips18/index.html). Work with [John Foley](http://jjfoley.me) ([Smith College](http://smith.edu)), [Kaleigh Clary](http://cs.umass.edu/~kclary), [David Jensen](http://cs.umass.edu/~jensen).
 - [Sam Witty](http://cs.umass.edu/~switty) presented "Causal Graphs versus Causal Programs: The Case of Conditional Branching" at [ProbProg 2018](https://probprog.cc). (10/5/2018)
 - [Emma Tosch](http://cs.umass.edu/~etosch) presented "Mocking Atari for Deep Reinforcement Learning" at [IBM AI Systems Day](https://researcher.watson.ibm.com/researcher/view_group.php?id=9595). (10/3/2018)
-- [David Jensen](http://cs.umass.edu/~jensen) presented at the [IBM Causal Inference Workshop](https://researcher.watson.ibm.com/researcher/view_group.php?id=9676). (10/3/2018)
+- [David Jensen](http://cs.umass.edu/~jensen) presented "Toward Learning Causal models of Complex Phenomena" at the [IBM Causal Inference Workshop](https://researcher.watson.ibm.com/researcher/view_group.php?id=9676). (10/3/2018)
 - [Reilly Grant](http://cs.umass.edu/~rngrant) joins KDL. (September 2018)
 - [Akanksha Atrey](http://cs.umass.edu/~aatrey) received the Lori A. Clarke Scholarship in Computer Science 2018 from CICS, UMass Amherst. (June 2018)
 - [Kaleigh Clary](http://cs.umass.edu/~kclary) was selected to participate in this year's class of fellows at the [Data Science for Social Good (DSSG)](https://dssg.uchicago.edu) Summer Program at the University of Chicago. (March 2018)
