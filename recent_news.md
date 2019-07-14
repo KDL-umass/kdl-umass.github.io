@@ -4,7 +4,7 @@ layout: page
 ## Recent News
 
 # 2019
-- [David Jensen](http://cs.umass.edu/~jensen) will be presenting [Object Conditioning for Causal Inference]() at the [Conference on Uncertainty in Artificial Intelligence] in Tel Aviv. (July 2019)
+- [David Jensen](http://cs.umass.edu/~jensen) will be presenting [Object Conditioning for Causal Inference]() at the [Conference on Uncertainty in Artificial Intelligence](http://auai.org/uai2019/) in Tel Aviv. Work with [Javier Burroni](https://www.linkedin.com/in/javierburroni/) and [Matt Rattigan](https://www.cics.umass.edu/people/rattigan-matthew). (July 2019)
 - [Akanksha Atrey](http://cs.umass.edu/~aatrey) will be interning at [IBM](http://research.ibm.com/labs/watson/). (Summer 2019) 
 - [Sam Witty](http://cs.umass.edu/~switty) will be interning at [Invitae](https://www.invitae.com/en/), exploring ways of using probabilistic programming languages to model genetics. (Summer 2019)
 - [Akanksha Atrey](http://cs.umass.edu/~aatrey) presented [Identifying When Effect Restoration Will Improve Estimates of Causal Effect]() at the Symposium on Data Mining. Work with [Hüseyin Oktay](https://www.linkedin.com/in/huseyin-oktay-715aa915/) and [David Jensen](http://people.cs.umass.edu/~jensen/). (5/3/2019)
