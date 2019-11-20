@@ -25,8 +25,12 @@ exclude:
   - node_modules
 
 topics:
+  - key: xai
+    text: Explainable AI
   - key: causal
     text: Causal Modeling
+  - key: ppl
+    text: Probabilistic Programming
   - key: relational
     text: Statistical Relational Learning
   - key: networks

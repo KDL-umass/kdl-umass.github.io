@@ -4,6 +4,10 @@ layout: page
 
 KDL has developed and released several open source software packages as part of our research efforts:
 
+[**Toybox**](https://github.com/KDL-umass/Toybox)
+
+Atari games have become the de facto test suite for deep reinforcement learning. Unfortunately, these games are still black boxes that do not permit systemtic intervention on program state. Toybox is a suite of Atari games and associated testing framework for validating behavioral requirements of agents trained on Atari games. 
+
 [**Relational Causal Discovery**](relational_causal_discovery.html)
 
 Relational Causal Discovery (RCD) is a sound and complete algorithm for learning causal models from relational data.  RCD employs a novel rule, called relational bivariate orientation, that can can detect the orientation of a bivariate dependency with no assumptions on the underlying distribution.  Combined with relational extensions to the rules utilized by the PC algorithm, RCD is provably sound and complete under the causal sufficiency assumption.  Given a database and schema, RCD outputs a partially directed model that represents the equivalence class of statistically indistinguishable relational causal models.

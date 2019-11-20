@@ -27,7 +27,7 @@ years:
         {% for pub in site.pubs %}
            {% if topic.key == pub.topic %}
                {% if year == pub.year %}
-               <li class="nobullet pub">{% if pub.permalink %}<a href="{{ pub.permalink }}">{{ pub.title }}</a>{% else %}{{ pub.title }}{% endif %}&nbsp;&mdash;&nbsp;{{ pub.authors }} ({{ pub.shortvenue}} {{ pub.year }}) [<a href="{{ pub.pdfurl }}">PDF</a>]</li>
+               <li class="nobullet pub">{% if pub.permalink %}<a href="{{ pub.permalink }}">{{ pub.title }}</a>{% else %}{{ pub.title }}{% endif %}&nbsp;&mdash;&nbsp;{{ pub.authors }} ({% if pub.shortvenue == nil %}{{ pub.longvenue }}{% else %}{{ pub.shortvenue }}{% endif %} {{ pub.year }}) [<a href="{{ pub.pdfurl }}">PDF</a>]</li>
            {% endif %}{% endif %}
        {% endfor %}
     {% endfor %}
